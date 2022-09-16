@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="484.0" prefWidth="900.0" style="-fx-border-color: #C8C8C8;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.videoproject.HelloController">
+   <children>
+      <MenuBar layoutX="-4.0" layoutY="2.0" prefHeight="25.0" prefWidth="909.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <GridPane layoutX="8.0" layoutY="82.0" prefHeight="234.0" prefWidth="886.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="7.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="1">
+              <tabs>
+                <Tab text="Untitled Tab 1">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tabs" stylesheets="@style.css" />
+                  </content>
+                </Tab>
+                <Tab text="Untitled Tab 2">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" styleClass="tabs" stylesheets="@style.css" />
+                  </content>
+                </Tab>
+              </tabs>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </TabPane>
+            <TableView fx:id="fileTable" prefHeight="200.0" prefWidth="200.0">
+              <columns>
+                <TableColumn fx:id="fileName" minWidth="0.0" prefWidth="104.0" text="File Name" />
+                  <TableColumn fx:id="fileSize" prefWidth="110.0" text="File Size" />
+                  <TableColumn fx:id="outputFormat" prefWidth="222.0" text="Output Format" />
+              </columns>
+               <GridPane.margin>
+                  <Insets right="5.0" />
+               </GridPane.margin>
+            </TableView>
+         </children>
+      </GridPane>
+      <GridPane hgap="10.0" layoutX="8.0" layoutY="32.0" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="38.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="543.0" minWidth="10.0" prefWidth="315.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="406.0" minWidth="10.0" prefWidth="300.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="281.0" minWidth="10.0" prefWidth="268.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" onAction="#addVideos" prefHeight="65.0" prefWidth="330.0" text="Add Video" />
+            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="332.0" text="Delete Video" GridPane.columnIndex="1" />
+            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="286.0" text="Convert" GridPane.columnIndex="2" />
+         </children>
+      </GridPane>
+      <FlowPane alignment="CENTER" columnHalignment="CENTER" hgap="4.0" layoutX="8.0" layoutY="328.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="872.0" rowValignment="TOP" vgap="2.0">
+         <children>
+            <Label prefHeight="28.0" prefWidth="82.0" text="Output Folder:" />
+            <TextField prefHeight="30.0" prefWidth="717.0" />
+            <Button mnemonicParsing="false" prefHeight="30.0" prefWidth="163.0" text="Button" />
+         </children>
+      </FlowPane>
+   </children>
+</AnchorPane>

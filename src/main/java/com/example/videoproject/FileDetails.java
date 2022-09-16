@@ -2,11 +2,13 @@ package com.example.videoproject;
 
 public class FileDetails {
     String fileName;
-    String filePath;
+    String outputFormat;
+    String fileSize;
 
-    public FileDetails(String fileName, String filePath) {
+    public FileDetails(String fileName, String outputFormat, String fileSize) {
         this.fileName = fileName;
-        this.filePath = filePath;
+        this.outputFormat = outputFormat;
+        this.fileSize = fileSize;
     }
 
     public String getFileName() {
@@ -17,11 +19,19 @@ public class FileDetails {
         this.fileName = fileName;
     }
 
-    public String getFilePath() {
-        return filePath;
+    public String getOutputFormat() {
+        return outputFormat;
     }
 
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
+    public void setOutputFormat(String outputFormat) {
+        this.outputFormat = outputFormat;
+    }
+
+    public String getFileSize() {
+        return fileSize;
+    }
+
+    public void setFileSize(String fileSize) {
+        this.fileSize = fileSize;
     }
 }

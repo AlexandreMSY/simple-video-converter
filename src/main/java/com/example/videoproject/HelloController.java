@@ -5,46 +5,47 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 
+
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 public class HelloController implements Initializable {
-
     @FXML
     private TableColumn<FileDetails, String> fileName;
 
     @FXML
-    private TableColumn<FileDetails, String> filePath;
-
+    private TableColumn<FileDetails, String> outputFormat;
     @FXML
-    private TableView<FileDetails> table;
-
-    ObservableList<FileDetails> videoFilesList = FXCollections.observableArrayList();
-
+    private TableColumn<FileDetails, String> fileSize;
     @FXML
-    void addVideo(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        File videoFile = fileChooser.showOpenDialog(null);
+    private TableView<FileDetails> fileTable;
 
-        String filePath = videoFile.getAbsolutePath();
-        String fileName = videoFile.getName();
-
-        FileDetails fileDetails = new FileDetails(fileName, filePath);
-
-        videoFilesList.add(fileDetails);
-        table.setItems(videoFilesList);
-    }
+    ObservableList<FileDetails> videoFiles = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        filePath.setCellValueFactory(new PropertyValueFactory<>("filePath"));
         fileName.setCellValueFactory(new PropertyValueFactory<>("fileName"));
+        outputFormat.setCellValueFactory(new PropertyValueFactory<>("outputFormat"));
+        fileSize.setCellValueFactory(new PropertyValueFactory<>("fileSize"));
+    }
+
+    @FXML
+    void addVideos(ActionEvent event){
+        FileChooser fileChooser = new FileChooser();
+        File file = fileChooser.showOpenDialog(null);
+
+        float fileSize = file.length();
+        String videoName = file.getName();
+        //String videoPath = file.getAbsolutePath();
+        String readableSize = Conversions.byteConversion(fileSize);
+
+        FileDetails videoFile = new FileDetails(videoName, null, readableSize);
+        videoFiles.add(videoFile);
+        fileTable.setItems(videoFiles);
     }
 }
