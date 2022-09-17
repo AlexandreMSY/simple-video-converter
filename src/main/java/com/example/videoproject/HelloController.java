@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 
 
@@ -15,6 +16,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 public class HelloController implements Initializable {
+    int index;
     @FXML
     private TableColumn<FileDetails, String> fileName;
 
@@ -33,7 +35,6 @@ public class HelloController implements Initializable {
         outputFormat.setCellValueFactory(new PropertyValueFactory<>("outputFormat"));
         fileSize.setCellValueFactory(new PropertyValueFactory<>("fileSize"));
     }
-
     @FXML
     void addVideos(ActionEvent event){
         FileChooser fileChooser = new FileChooser();
@@ -41,11 +42,20 @@ public class HelloController implements Initializable {
 
         float fileSize = file.length();
         String videoName = file.getName();
-        //String videoPath = file.getAbsolutePath();
         String readableSize = Conversions.byteConversion(fileSize);
 
         FileDetails videoFile = new FileDetails(videoName, null, readableSize);
         videoFiles.add(videoFile);
         fileTable.setItems(videoFiles);
+    }
+    @FXML
+    void deleteVideo(ActionEvent event) {
+        videoFiles.remove(index);
+        fileTable.setItems(videoFiles);
+    }
+    @FXML
+    void getSelectedIndex(MouseEvent event) {
+        index = fileTable.getSelectionModel().getSelectedIndex();
+        System.out.println(index);
     }
 }
