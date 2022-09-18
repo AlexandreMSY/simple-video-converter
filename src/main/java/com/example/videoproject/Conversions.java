@@ -15,7 +15,7 @@ public class Conversions {
         double result;
 
         if (size < kilobyte){
-            return size + "Byte";
+            return size + " Byte";
         } else if (size < megabyte) {
             result = size / kilobyte;
             return sizeFormat(result) + " KB";
@@ -30,4 +30,5 @@ public class Conversions {
             return sizeFormat(result) + " TB";
         }
     }
+
 }

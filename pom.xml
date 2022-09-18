@@ -38,6 +38,13 @@
             <version>2.11.0</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/ws.schild/jave-all-deps -->
+        <dependency>
+            <groupId>ws.schild</groupId>
+            <artifactId>jave-all-deps</artifactId>
+            <version>3.3.1</version>
+        </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
