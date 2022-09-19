@@ -12,3 +12,4 @@ Simple video converter is a Java program for dealing with video conversion.
 ## Usage
 
 Click Add Video and select the video that you want to convert, then choose an output format and click Convert.
+The converted video is going to appear at your Desktop.
