@@ -60,7 +60,7 @@ public class AppController implements Initializable {
         String videoName = file.getName();
         String videoNameWithoutExtension = Conversions.removeFileExtension(file.getName());
         String sourcePath = file.getAbsolutePath();
-        String targetPath = "C:\\Users\\roadr\\Desktop"; //placeholder
+        String targetPath = System.getProperty("user.home") + "/Desktop";; //placeholder
         String readableSize = Conversions.byteConversion(fileSize);
         int qualityPreset = 1;
 
