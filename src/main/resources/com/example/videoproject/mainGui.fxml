@@ -41,13 +41,11 @@
          <children>
             <TableView fx:id="fileTable" onMouseClicked="#getSelectedIndex" GridPane.columnSpan="2147483647" GridPane.rowSpan="2147483647">
               <columns>
-                <TableColumn fx:id="fileName" maxWidth="1.7976931348623157E308" minWidth="100.0" prefWidth="-1.0" text="File Name" />
-                  <TableColumn fx:id="fileSize" minWidth="100.0" prefWidth="-1.0" text="File Size" />
-                  <TableColumn fx:id="outputFormat" maxWidth="694.0" minWidth="100.0" prefWidth="-1.0" text="Output Format" />
+                <TableColumn fx:id="fileName" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="110.0" text="File Name" />
+                  <TableColumn fx:id="fileSize" minWidth="35.0" prefWidth="73.0" text="File Size" />
+                  <TableColumn fx:id="outputFormat" maxWidth="305.0" minWidth="-1.0" prefWidth="102.0" text="Output Format" />
+                  <TableColumn fx:id="status" minWidth="1.0" prefWidth="396.0" text="Status" />
               </columns>
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
             </TableView>
          </children>
       </GridPane>

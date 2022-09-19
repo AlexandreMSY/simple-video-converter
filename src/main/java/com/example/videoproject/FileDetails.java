@@ -4,13 +4,23 @@ public class FileDetails {
     String fileName;
     String outputFormat;
     String fileSize;
+    String status;
     int qualityPreset;
 
-    public FileDetails(String fileName, String outputFormat, String fileSize, int qualityPreset) {
+    public FileDetails(String fileName, String outputFormat, String fileSize,String status, int qualityPreset) {
         this.fileName = fileName;
         this.outputFormat = outputFormat;
         this.fileSize = fileSize;
         this.qualityPreset = qualityPreset;
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getFileName() {

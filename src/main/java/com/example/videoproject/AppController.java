@@ -2,6 +2,7 @@ package com.example.videoproject;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,6 +25,9 @@ public class AppController implements Initializable {
     private TableColumn<FileDetails, String> outputFormat;
     @FXML
     private TableColumn<FileDetails, String> fileSize;
+
+    @FXML
+    private TableColumn<FileDetails, String> status;
     @FXML
     private TableView<FileDetails> fileTable;      //table that lists all the files to be converted
     @FXML
@@ -46,6 +50,7 @@ public class AppController implements Initializable {
         fileName.setCellValueFactory(new PropertyValueFactory<>("fileName"));
         outputFormat.setCellValueFactory(new PropertyValueFactory<>("outputFormat"));
         fileSize.setCellValueFactory(new PropertyValueFactory<>("fileSize"));
+        status.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         fileFormats.setItems(fileFormatsOptions);
         qualityPresets.setItems(qualityOptions);
@@ -60,11 +65,12 @@ public class AppController implements Initializable {
         String videoName = file.getName();
         String videoNameWithoutExtension = Conversions.removeFileExtension(file.getName());
         String sourcePath = file.getAbsolutePath();
-        String targetPath = System.getProperty("user.home") + "/Desktop";; //placeholder
+        String targetPath = System.getProperty("user.home") + "/Desktop"; //placeholder
         String readableSize = Conversions.byteConversion(fileSize);
+        String status = "In queue";
         int qualityPreset = 1;
 
-        FileDetails videoFile = new FileDetails(videoName, null, readableSize, qualityPreset);
+        FileDetails videoFile = new FileDetails(videoName, null, readableSize, status, qualityPreset);
         VideoConversion videoConversion = new VideoConversion(sourcePath, targetPath, videoNameWithoutExtension);
 
         videoFiles.add(videoFile);
@@ -119,6 +125,7 @@ public class AppController implements Initializable {
             bitrate = Conversions.kpbsToBps(4000);
             qualityPreset = 2;
         } else {
+            qualityPreset = 1;
             bitrate = null;
         }
 

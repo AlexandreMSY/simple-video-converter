@@ -55,7 +55,7 @@ public class VideoConversion {
         this.videoFrameRate = frameRate;
     }
 
-    public void encode() throws EncoderException {
+    public boolean encode() throws EncoderException {
         File source = new File(this.sourcePath);
         File target = new File(this.targetPath + "\\" + this.outputName + "." + (this.outputFormat.equals("matroska") ?  "mkv" : this.outputFormat));
 
@@ -77,5 +77,7 @@ public class VideoConversion {
 
         Encoder encoder = new Encoder();
         encoder.encode(new MultimediaObject(source), target, attributes);
+
+        return true;
     }
 }
