@@ -96,7 +96,6 @@ public class AppController implements Initializable {
         qualityPresets.getSelectionModel().clearAndSelect(qualityPreset);
     }
 
-
     @FXML
     void changeVideoFormat(MouseEvent event) {
         String selectedFormat = fileFormats.getSelectionModel().getSelectedItem().equals("mkv") ? "matroska" : fileFormats.getSelectionModel().getSelectedItem();
@@ -133,10 +132,27 @@ public class AppController implements Initializable {
         conversionQueue.get(index).setVideoAttributes(null, bitrate, null);
     }
 
+    Task<Void> task = new Task<>() {
+        @Override
+        protected Void call() throws Exception {
+            for (int index = 0; index < conversionQueue.size(); index++) {
+                conversionQueue.get(index).encode();
+                videoFiles.get(index).setStatus("Converting");
+                fileTable.setItems(videoFiles);
+                fileTable.refresh();
+
+                if (conversionQueue.get(index).encode()) {
+                    videoFiles.get(index).setStatus("Finished");
+                    fileTable.setItems(videoFiles);
+                    fileTable.refresh();
+                }
+            }
+            return null;
+        }
+    };
     @FXML
     void convertVideos(ActionEvent event) throws EncoderException {
-        for (VideoConversion videoConversion : conversionQueue) {
-            videoConversion.encode();
-        }
+        Thread thread = new Thread(task);
+        thread.start();
     }
 }
