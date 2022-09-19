@@ -3,7 +3,7 @@ package com.example.videoproject;
 import java.text.DecimalFormat;
 
 public class Conversions {
-    private static String sizeFormat(double number){
+    private static String decimalFormat(double number){
         return new DecimalFormat("#.##").format(number);
     }
 
@@ -18,17 +18,28 @@ public class Conversions {
             return size + " Byte";
         } else if (size < megabyte) {
             result = size / kilobyte;
-            return sizeFormat(result) + " KB";
+            return decimalFormat(result) + " KB";
         } else if (size < gigabyte) {
             result = size / megabyte;
-            return sizeFormat(result) + " MB";
+            return decimalFormat(result) + " MB";
         } else if (size < terabyte){
             result = size / gigabyte;
-            return sizeFormat(result) + " GB";
+            return decimalFormat(result) + " GB";
         } else {
             result = size / terabyte;
-            return sizeFormat(result) + " TB";
+            return decimalFormat(result) + " TB";
         }
     }
 
+    public static String removeFileExtension(String fileName) {                       //check https://www.quickprogrammingtips.com/java/how-to-remove-extension-from-filename-in-java.html for more details
+        if (fileName.indexOf(".") > 0) {
+            return fileName.substring(0, fileName.lastIndexOf("."));
+        } else {
+            return fileName;
+        }
+    }
+
+    public static int kpbsToBps(int kilobitPerSecond){
+        return kilobitPerSecond * 1000;
+    }
 }

@@ -21,7 +21,7 @@ public class VideoConversion {
     private Integer audioSamplingRate;
 
     private String videoCodec;
-    private Integer videoBitRate;
+    Integer videoBitRate;
     private Integer videoFrameRate;
 
     public VideoConversion(String sourcePath, String targetPath, String outputName) {
@@ -57,7 +57,7 @@ public class VideoConversion {
 
     public void encode() throws EncoderException {
         File source = new File(this.sourcePath);
-        File target = new File(this.targetPath + "\\" + this.outputName + "." + (this.outputFormat.equals("matroska") ?  ".mkv" : this.outputFormat));
+        File target = new File(this.targetPath + "\\" + this.outputName + "." + (this.outputFormat.equals("matroska") ?  "mkv" : this.outputFormat));
 
         AudioAttributes audio = new AudioAttributes();
         audio.setCodec(this.audioCodec);
