@@ -41,6 +41,7 @@ public class HelloController implements Initializable {
             "flv");
     ObservableList<String> qualityOptions = FXCollections.observableArrayList("Low", "Normal", "High");
     ObservableList<VideoConversion> conversionQueue = FXCollections.observableArrayList();
+    
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         fileName.setCellValueFactory(new PropertyValueFactory<>("fileName"));
@@ -50,6 +51,7 @@ public class HelloController implements Initializable {
         fileFormats.setItems(fileFormatsOptions);
         qualityPresets.setItems(qualityOptions);
     }
+
     @FXML
     void addVideos(ActionEvent event){
         FileChooser fileChooser = new FileChooser();
@@ -57,29 +59,33 @@ public class HelloController implements Initializable {
 
         float fileSize = file.length();
         String videoName = file.getName();
+        String videoNameWithoutExtension = Conversions.removeFileExtension(file.getName());
         String sourcePath = file.getAbsolutePath();
         String targetPath = "C:\\Users\\roadr\\Desktop";
         String readableSize = Conversions.byteConversion(fileSize);
 
         FileDetails videoFile = new FileDetails(videoName, null, readableSize);
-        VideoConversion videoConversion = new VideoConversion(sourcePath, targetPath, videoName);
+        VideoConversion videoConversion = new VideoConversion(sourcePath, targetPath, videoNameWithoutExtension);
 
         videoFiles.add(videoFile);
         conversionQueue.add(videoConversion);
 
         fileTable.setItems(videoFiles);
     }
+
     @FXML
     void deleteVideo(ActionEvent event) {
         videoFiles.remove(index);
         fileTable.setItems(videoFiles);
     }
+
     @FXML
     void getSelectedIndex(MouseEvent event) {
         index = fileTable.getSelectionModel().getSelectedIndex();
 
         String fileOutputName = conversionQueue.get(index).getOutputName();
         outputFileName.setText(fileOutputName);
+        System.out.println(conversionQueue.get(index).getOutputName());
     }
 
     @FXML
@@ -90,15 +96,11 @@ public class HelloController implements Initializable {
         videoFiles.get(index).setOutputFormat(selectedFormat);
         fileTable.setItems(videoFiles);
         fileTable.refresh();
-
-        System.out.println(videoFiles.get(index).getOutputFormat());
-        System.out.println(conversionQueue.get(index).getOutputName());
     }
 
     @FXML
     void setOutputName(KeyEvent event) {
         String newOutputName = outputFileName.getText();
-        System.out.println(newOutputName);
         conversionQueue.get(index).setOutputName(newOutputName);
     }
 }
