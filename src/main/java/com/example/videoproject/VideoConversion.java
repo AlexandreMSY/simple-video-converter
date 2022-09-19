@@ -10,21 +10,36 @@ import ws.schild.jave.encode.VideoAttributes;
 import java.io.File;
 
 public class VideoConversion {
-    String sourcePath;
-    String targetPath;
+    private String outputFormat;
+    private String outputName;
+    private String sourcePath;
+    private String targetPath;
 
-    String audioCodec;
-    Integer audioBitRate;
-    Integer audioChannels;
-    Integer audioSamplingRate;
+    private String audioCodec;
+    private Integer audioBitRate;
+    private Integer audioChannels;
+    private Integer audioSamplingRate;
 
-    String videoCodec;
-    Integer videoBitRate;
-    Integer videoFrameRate;
+    private String videoCodec;
+    private Integer videoBitRate;
+    private Integer videoFrameRate;
 
-    public VideoConversion(String sourcePath, String targetPath) {
+    public VideoConversion(String sourcePath, String targetPath, String outputName) {
         this.sourcePath = sourcePath;
         this.targetPath = targetPath;
+        this.outputName = outputName;
+    }
+
+    public String getOutputName() {
+        return outputName;
+    }
+
+    public void setOutputName(String outputName) {
+        this.outputName = outputName;
+    }
+
+    public void setOutputFormat(String outputFormat){
+        this.outputFormat = outputFormat;
     }
 
     public void setAudioAttributes(String codec, Integer bitRate, Integer channels, Integer SamplingRate){
@@ -40,9 +55,9 @@ public class VideoConversion {
         this.videoFrameRate = frameRate;
     }
 
-    public void encode(String outputFormat) throws EncoderException {
+    public void encode() throws EncoderException {
         File source = new File(this.sourcePath);
-        File target = new File(this.targetPath);
+        File target = new File(this.targetPath + "\\" + this.outputName + "." + (this.outputFormat.equals("matroska") ?  ".mkv" : this.outputFormat));
 
         AudioAttributes audio = new AudioAttributes();
         audio.setCodec(this.audioCodec);
@@ -56,13 +71,11 @@ public class VideoConversion {
         video.setFrameRate(this.videoFrameRate);
 
         EncodingAttributes attributes = new EncodingAttributes();
-        attributes.setOutputFormat(outputFormat);
+        attributes.setOutputFormat(this.outputFormat);
         attributes.setVideoAttributes(video);
         attributes.setAudioAttributes(audio);
 
         Encoder encoder = new Encoder();
         encoder.encode(new MultimediaObject(source), target, attributes);
     }
-
-
 }

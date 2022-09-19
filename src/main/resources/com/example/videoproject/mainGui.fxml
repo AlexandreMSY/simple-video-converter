@@ -57,7 +57,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="233.0" prefWidth="895.0">
                      <children>
-                        <ListView fx:id="fileFormats" layoutX="14.0" layoutY="27.0" onMouseClicked="#getSelectedFormat" prefHeight="276.0" prefWidth="200.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="7.0" AnchorPane.topAnchor="27.0" />
+                        <ListView fx:id="fileFormats" layoutX="14.0" layoutY="27.0" onMouseClicked="#changeVideoFormat" prefHeight="276.0" prefWidth="200.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="7.0" AnchorPane.topAnchor="27.0" />
                         <Label layoutX="7.0" layoutY="6.0" text="Output Format" />
                         <GridPane layoutX="340.0" layoutY="28.0" style="-fx-border-color: c8c8c8;" vgap="3.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="220.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="27.0">
                           <columnConstraints>
@@ -85,7 +85,7 @@
                                  <children>
                                     <HBox alignment="CENTER" HBox.hgrow="ALWAYS">
                                        <children>
-                                          <TextField maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+                                          <TextField fx:id="outputFileName" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onKeyTyped="#setOutputName" HBox.hgrow="ALWAYS" />
                                        </children>
                                        <HBox.margin>
                                           <Insets left="5.0" right="5.0" top="5.0" />
@@ -95,7 +95,7 @@
                               </HBox>
                               <HBox alignment="CENTER_LEFT" prefHeight="91.0" prefWidth="379.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1">
                                  <children>
-                                    <ComboBox fx:id="qualityPresets" onAction="#test" prefWidth="150.0" />
+                                    <ComboBox fx:id="qualityPresets" prefWidth="150.0" />
                                  </children>
                                  <GridPane.margin>
                                     <Insets left="5.0" right="5.0" />
@@ -121,30 +121,23 @@
           </Tab>
         </tabs>
       </TabPane>
-      <GridPane layoutX="9.0" layoutY="34.0" prefHeight="41.0" prefWidth="895.0">
+      <GridPane layoutX="9.0" layoutY="34.0" prefHeight="41.0" prefWidth="682.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="ALWAYS" percentWidth="0.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.valignment="CENTER">
+            <HBox alignment="CENTER_LEFT" spacing="10.0" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER">
                <children>
-                  <Button mnemonicParsing="false" onAction="#addVideos" prefHeight="25.0" prefWidth="230.0" text="Add Video" />
-                  <Button mnemonicParsing="false" onAction="#deleteVideo" prefHeight="25.0" prefWidth="230.0" text="Delete Video" />
+                  <Button mnemonicParsing="false" onAction="#addVideos" prefHeight="42.0" text="Add Video" HBox.hgrow="ALWAYS" />
+                  <Button mnemonicParsing="false" onAction="#deleteVideo" prefHeight="43.0" text="Delete Video" HBox.hgrow="ALWAYS" />
                </children>
                <GridPane.margin>
                   <Insets bottom="3.0" right="3.0" top="3.0" />
                </GridPane.margin>
             </HBox>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-               <GridPane.margin>
-                  <Insets bottom="3.0" left="3.0" right="3.0" top="3.0" />
-               </GridPane.margin>
-            </AnchorPane>
          </children>
       </GridPane>
    </children>

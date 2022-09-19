@@ -26,14 +26,15 @@ public class Test {
 
             String sourcePath = source.getAbsolutePath();
             String newFileName = JOptionPane.showInputDialog(null,"Set the file name");
-            String targetPath = target.getAbsolutePath() + "\\" + newFileName + ".flv";
+            String targetPath = target.getAbsolutePath();
 
             System.out.println(sourcePath);
             System.out.println(targetPath);
 
-            VideoConversion test = new VideoConversion(sourcePath, targetPath);
-            test.setVideoAttributes("flv", null, 3);
-            test.encode("flv");
+            VideoConversion test = new VideoConversion(sourcePath, targetPath, newFileName);
+            test.setVideoAttributes(null,null, 60);
+            test.setOutputFormat("swf");
+            test.encode();
         }
     }
 }
