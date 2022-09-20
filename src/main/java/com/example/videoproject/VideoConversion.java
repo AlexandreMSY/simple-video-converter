@@ -42,6 +42,10 @@ public class VideoConversion {
         this.outputFormat = outputFormat;
     }
 
+    public void setTargetPath(String targetPath) {
+        this.targetPath = targetPath;
+    }
+
     public void setAudioAttributes(String codec, Integer bitRate, Integer channels, Integer SamplingRate){
         this.audioCodec = codec;
         this.audioBitRate = bitRate;

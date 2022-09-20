@@ -10,15 +10,18 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import ws.schild.jave.EncoderException;
 
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 public class AppController implements Initializable {
-    int index;
+    private final String usersFolder = System.getProperty("user.home");
+    private int index;
     @FXML
     private TableColumn<FileDetails, String> fileName;                //lines 23-27 are all the columns used in the files table
     @FXML
@@ -32,6 +35,9 @@ public class AppController implements Initializable {
     private TableView<FileDetails> fileTable;      //table that lists all the files to be converted
     @FXML
     private TextField outputFileName;
+
+    @FXML
+    private Label outputFolder;
     @FXML
     private ListView<String> fileFormats;
     @FXML
@@ -52,6 +58,7 @@ public class AppController implements Initializable {
         fileSize.setCellValueFactory(new PropertyValueFactory<>("fileSize"));
         status.setCellValueFactory(new PropertyValueFactory<>("status"));
 
+        outputFolder.setText(usersFolder + "\\Videos");
         fileFormats.setItems(fileFormatsOptions);
         qualityPresets.setItems(qualityOptions);
     }
@@ -65,7 +72,7 @@ public class AppController implements Initializable {
         String videoName = file.getName();
         String videoNameWithoutExtension = Conversions.removeFileExtension(file.getName());
         String sourcePath = file.getAbsolutePath();
-        String targetPath = System.getProperty("user.home") + "/Desktop"; //placeholder
+        String targetPath = outputFolder.getText(); //placeholder
         String readableSize = Conversions.byteConversion(fileSize);
         String status = "In queue";
         int qualityPreset = 1;
@@ -83,6 +90,19 @@ public class AppController implements Initializable {
     void deleteVideo(ActionEvent event) {
         videoFiles.remove(index);
         fileTable.setItems(videoFiles);
+    }
+
+    @FXML
+    void changeOutputFolder(ActionEvent event) throws IOException {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File folder = directoryChooser.showDialog(null);
+        String newOutputFolder = folder.getAbsolutePath();
+
+        for (VideoConversion videoConversion : conversionQueue) {
+            videoConversion.setTargetPath(newOutputFolder);
+        }
+
+        outputFolder.setText(newOutputFolder);
     }
 
     @FXML
