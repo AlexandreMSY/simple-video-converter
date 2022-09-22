@@ -46,7 +46,13 @@ public class AppController implements Initializable {
             "mp4",
             "mkv",
             "ogg",
-            "flv");
+            "flv",
+            "avi",
+            "m4v",
+            "wav",
+            "mov",
+            "3gp",
+            "swf");
     ObservableList<String> qualityOptions = FXCollections.observableArrayList("Low", "Default", "High");
     ObservableList<VideoConversion> conversionQueue = FXCollections.observableArrayList();
     ObservableList<FileDetails> videoFiles = FXCollections.observableArrayList();
