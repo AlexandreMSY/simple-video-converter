@@ -16,6 +16,7 @@ import javafx.stage.FileChooser;
 import ws.schild.jave.EncoderException;
 
 
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -50,10 +51,10 @@ public class AppController implements Initializable {
             "flv",
             "avi",
             "m4v",
-            "wav",
             "mov",
-            "3gp",
-            "swf");
+            "swf",
+            "gif");
+
     ObservableList<String> qualityOptions = FXCollections.observableArrayList("Low", "Default", "High");
     ObservableList<VideoConversion> conversionQueue = FXCollections.observableArrayList();
     ObservableList<FileDetails> videoFiles = FXCollections.observableArrayList();
@@ -74,6 +75,28 @@ public class AppController implements Initializable {
     void addVideos(@SuppressWarnings("unused") ActionEvent event){
         try {
             FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("All supported Video Files",
+                            "*.mp4",
+                            "*.mkv",
+                            "*.ogg",
+                            "*.flv",
+                            "*.avi",
+                            "*.m4v",
+                            "*.wmv",
+                            "*.mov",
+                            "*.3gp",
+                            "*.swf"),
+                    new FileChooser.ExtensionFilter("MP4 (*.mp4)", "*.mp4"),
+                    new FileChooser.ExtensionFilter("MKV (*.mkv)", "*.mkv"),
+                    new FileChooser.ExtensionFilter("FLV (*.flv)", "*.flv"),
+                    new FileChooser.ExtensionFilter("AVI (*.avi)", "*.avi"),
+                    new FileChooser.ExtensionFilter("M4V (*.m4v)", "*.m4v"),
+                    new FileChooser.ExtensionFilter("WMV (*.wmv)", "*.wmv"),
+                    new FileChooser.ExtensionFilter("MOV (*.mov)", "*.mov"),
+                    new FileChooser.ExtensionFilter("3GP (*.3gp)", "*.3gp"),
+                    new FileChooser.ExtensionFilter("SWF (*.swf)", "*.swf")
+            );
             File file = fileChooser.showOpenDialog(null);
 
             float fileSize = file.length();
@@ -187,7 +210,7 @@ public class AppController implements Initializable {
         }
     }
 
-    Service service = new Service(){
+    Service convertVideos = new Service(){
         protected Task createTask() {
             return new Task() {
                 @Override
@@ -209,11 +232,12 @@ public class AppController implements Initializable {
             };
         }
     };
+
     @FXML
     void convertVideos(@SuppressWarnings("unused") ActionEvent event) throws EncoderException {
-        if(!service.isRunning()){
-            service.reset();
-            service.start();
+        if(!convertVideos.isRunning()){
+            convertVideos.reset();
+            convertVideos.start();
         }
     }
 }
