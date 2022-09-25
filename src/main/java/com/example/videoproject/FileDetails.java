@@ -1,11 +1,14 @@
 package com.example.videoproject;
 
 public class FileDetails {
-    String fileName;
-    String outputFormat;
-    String fileSize;
-    String status;
-    int qualityPreset;
+    private String fileName;
+    private String outputFormat;
+    private String fileSize;
+    private String status;
+
+    //those attributes are used as indexes for the comboBoxes
+    private int qualityPreset;
+    private int videoBitRate;
 
     public FileDetails(String fileName, String outputFormat, String fileSize,String status, int qualityPreset) {
         this.fileName = fileName;
@@ -13,6 +16,14 @@ public class FileDetails {
         this.fileSize = fileSize;
         this.qualityPreset = qualityPreset;
         this.status = status;
+    }
+
+    public int getVideoBitRate() {
+        return videoBitRate;
+    }
+
+    public void setVideoBitRate(int videoBitRate) {
+        this.videoBitRate = videoBitRate;
     }
 
     public String getStatus() {

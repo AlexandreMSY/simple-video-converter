@@ -16,7 +16,6 @@ import javafx.stage.FileChooser;
 import ws.schild.jave.EncoderException;
 
 
-import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -44,6 +43,8 @@ public class AppController implements Initializable {
     private ListView<String> fileFormats;
     @FXML
     private ComboBox<String> qualityPresets;
+    @FXML
+    private ComboBox<Integer> videoBitRate;
     ObservableList<String> fileFormatsOptions = FXCollections.observableArrayList(
             "mp4",
             "mkv",
@@ -57,7 +58,22 @@ public class AppController implements Initializable {
 
     ObservableList<String> qualityOptions = FXCollections.observableArrayList("Low", "Default", "High");
     ObservableList<VideoConversion> conversionQueue = FXCollections.observableArrayList();
-    ObservableList<FileDetails> videoFiles = FXCollections.observableArrayList();
+    ObservableList<FileDetails> files = FXCollections.observableArrayList(); //all the files that are going to be set for conversion
+    ObservableList<Integer> videoBitRateOptions = FXCollections.observableArrayList(
+            0,
+            256,
+            384,
+            512,
+            768,
+            1024,
+            1200,
+            1600,
+            2400,
+            5000,
+            10000,
+            16000);
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -69,6 +85,7 @@ public class AppController implements Initializable {
         outputFolder.setText(usersFolder + "\\Videos");
         fileFormats.setItems(fileFormatsOptions);
         qualityPresets.setItems(qualityOptions);
+        videoBitRate.setItems(videoBitRateOptions);
     }
 
     @FXML
@@ -111,10 +128,10 @@ public class AppController implements Initializable {
             FileDetails videoFile = new FileDetails(videoName, null, readableSize, status, qualityPreset);
             VideoConversion videoConversion = new VideoConversion(sourcePath, targetPath, videoNameWithoutExtension);
 
-            videoFiles.add(videoFile);
+            files.add(videoFile);
             conversionQueue.add(videoConversion);
 
-            fileTable.setItems(videoFiles);
+            fileTable.setItems(files);
         } catch (Exception RuntimeException) {
             System.out.println("No files added!");
         }
@@ -123,8 +140,8 @@ public class AppController implements Initializable {
     @FXML
     void deleteVideo(@SuppressWarnings("unused") ActionEvent event) {
         try {
-            videoFiles.remove(index);
-            fileTable.setItems(videoFiles);
+            files.remove(index);
+            fileTable.setItems(files);
         } catch (Exception RuntimeException) {
             System.out.println("No videos!");
         }
@@ -147,16 +164,22 @@ public class AppController implements Initializable {
         }
     }
 
+    //this method is executed when the user clicks any of the items on the table
     @FXML
     void getSelectedIndex(@SuppressWarnings("unused") MouseEvent event) {
         try {
             index = fileTable.getSelectionModel().getSelectedIndex();
 
             String fileOutputName = conversionQueue.get(index).getOutputName();
-            int qualityPreset = videoFiles.get(index).getQualityPreset();
+            //gets the index of the selected item of the comboBoxes in the tabs and then are used to clear and select the chosen option for the video file
+            int qualityPreset = files.get(index).getQualityPreset();
+            int videoBitRateOption = files.get(index).getVideoBitRate();
+
 
             outputFileName.setText(fileOutputName);
             qualityPresets.getSelectionModel().clearAndSelect(qualityPreset);
+            videoBitRate.getSelectionModel().clearAndSelect(videoBitRateOption);
+
         } catch (Exception IndexOutOfBoundsException){
             System.out.println("Empty list!");
         }
@@ -165,11 +188,13 @@ public class AppController implements Initializable {
     @FXML
     void changeVideoFormat(@SuppressWarnings("unused") MouseEvent event) {
         try {
-            String selectedFormat = fileFormats.getSelectionModel().getSelectedItem().equals("mkv") ? "matroska" : fileFormats.getSelectionModel().getSelectedItem();
+            String selectedFormat = fileFormats.getSelectionModel().getSelectedItem();
             conversionQueue.get(index).setOutputFormat(selectedFormat);
 
-            videoFiles.get(index).setOutputFormat(selectedFormat);
-            fileTable.setItems(videoFiles);
+            /*lines 195-197 refresh the output column to show the chosen outputFormat*/
+
+            files.get(index).setOutputFormat(selectedFormat);
+            fileTable.setItems(files);
             fileTable.refresh();
         } catch (Exception IndexOutOfBoundsException){
             System.out.println("No videos!");
@@ -190,21 +215,41 @@ public class AppController implements Initializable {
     void setVideoQuality(@SuppressWarnings("unused") ActionEvent event) {
         try {
             String selectedQualityPreset = qualityPresets.getSelectionModel().getSelectedItem();
-            int qualityPreset = 0;
+            int qualityPreset = qualityPresets.getSelectionModel().getSelectedIndex();
             Integer bitrate;
 
             if (selectedQualityPreset.equals("Low")) {
+                videoBitRate.getSelectionModel().clearAndSelect(0); //it makes the videoBitRate comboBox in the advanced video tab select 0 in order to return NULL
                 bitrate = Conversions.kpbsToBps(800);
             } else if (selectedQualityPreset.equals("High")) {
+                videoBitRate.getSelectionModel().clearAndSelect(0);
                 bitrate = Conversions.kpbsToBps(4000);
-                qualityPreset = 2;
             } else {
-                qualityPreset = 1;
                 bitrate = null;
             }
 
-            videoFiles.get(index).setQualityPreset(qualityPreset);
-            conversionQueue.get(index).setVideoAttributes(null, bitrate, null);
+            files.get(index).setQualityPreset(qualityPreset);
+            conversionQueue.get(index).setVideoBitRate(bitrate);
+        } catch (Exception IndexOutOfBoundsException){
+            System.out.println("No videos!");
+        }
+    }
+
+    //this method is used on the advanced video settings tab
+    @FXML
+    void setAdvancedVideoBitRate(ActionEvent event) {
+        try {
+            int selectionIndex = videoBitRate.getSelectionModel().getSelectedIndex();
+            Integer bitRate;
+
+            if (selectionIndex == 0) {
+                bitRate = null;
+            } else {
+                bitRate = Conversions.kpbsToBps(videoBitRate.getSelectionModel().getSelectedItem());
+            }
+
+            files.get(index).setVideoBitRate(selectionIndex);
+            conversionQueue.get(index).setAudioBitRate(bitRate);
         } catch (Exception IndexOutOfBoundsException){
             System.out.println("No videos!");
         }
@@ -217,13 +262,13 @@ public class AppController implements Initializable {
                 protected Void call() throws Exception {
                     for (int index = 0; index < conversionQueue.size(); index++) {     //https://docs.oracle.com/javafx/2/api/javafx/concurrent/Service.html for more information on services;
                         conversionQueue.get(index).encode();                            //https://stackoverflow.com/questions/16037062/javafx-use-a-thread-more-than-once more information about the thread solution
-                        videoFiles.get(index).setStatus("Converting");
-                        fileTable.setItems(videoFiles);
+                        files.get(index).setStatus("Converting");
+                        fileTable.setItems(files);
                         fileTable.refresh();
 
                         if (conversionQueue.get(index).encode()) {
-                            videoFiles.get(index).setStatus("Finished");
-                            fileTable.setItems(videoFiles);
+                            files.get(index).setStatus("Finished");
+                            fileTable.setItems(files);
                             fileTable.refresh();
                         }
                     }

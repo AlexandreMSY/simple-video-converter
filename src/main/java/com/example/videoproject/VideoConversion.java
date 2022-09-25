@@ -46,17 +46,64 @@ public class VideoConversion {
         this.targetPath = targetPath;
     }
 
-    public void setAudioAttributes(String codec, Integer bitRate, Integer channels, Integer SamplingRate){
-        this.audioCodec = codec;
-        this.audioBitRate = bitRate;
-        this.audioChannels = channels;
-        this.audioSamplingRate = SamplingRate;
+    public String getTargetPath() {
+        return targetPath;
     }
 
-    public void setVideoAttributes(String codec, Integer bitRate, Integer frameRate){
-        this.videoCodec = codec;
-        this.videoBitRate = bitRate;
-        this.videoFrameRate = frameRate;
+    public String getAudioCodec() {
+        return audioCodec;
+    }
+
+    public void setAudioCodec(String audioCodec) {
+        this.audioCodec = audioCodec;
+    }
+
+    public Integer getAudioBitRate() {
+        return audioBitRate;
+    }
+
+    public void setAudioBitRate(Integer audioBitRate) {
+        this.audioBitRate = audioBitRate;
+    }
+
+    public Integer getAudioChannels() {
+        return audioChannels;
+    }
+
+    public void setAudioChannels(Integer audioChannels) {
+        this.audioChannels = audioChannels;
+    }
+
+    public Integer getAudioSamplingRate() {
+        return audioSamplingRate;
+    }
+
+    public void setAudioSamplingRate(Integer audioSamplingRate) {
+        this.audioSamplingRate = audioSamplingRate;
+    }
+
+    public String getVideoCodec() {
+        return videoCodec;
+    }
+
+    public void setVideoCodec(String videoCodec) {
+        this.videoCodec = videoCodec;
+    }
+
+    public Integer getVideoBitRate() {
+        return videoBitRate;
+    }
+
+    public void setVideoBitRate(Integer videoBitRate) {
+        this.videoBitRate = videoBitRate;
+    }
+
+    public Integer getVideoFrameRate() {
+        return videoFrameRate;
+    }
+
+    public void setVideoFrameRate(Integer videoFrameRate) {
+        this.videoFrameRate = videoFrameRate;
     }
 
     public boolean encode() throws EncoderException {
