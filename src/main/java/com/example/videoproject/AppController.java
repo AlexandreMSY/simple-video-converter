@@ -216,14 +216,17 @@ public class AppController implements Initializable {
         try {
             String selectedQualityPreset = qualityPresets.getSelectionModel().getSelectedItem();
             int qualityPreset = qualityPresets.getSelectionModel().getSelectedIndex();
+            int kilobytesPerSecond;
             Integer bitrate;
 
             if (selectedQualityPreset.equals("Low")) {
                 videoBitRate.getSelectionModel().clearAndSelect(0); //it makes the videoBitRate comboBox in the advanced video tab select 0 in order to return NULL
-                bitrate = Conversions.kpbsToBps(800);
+                kilobytesPerSecond = 800; 
+                bitrate = Conversions.kpbsToBps(kilobytesPerSecond);
             } else if (selectedQualityPreset.equals("High")) {
                 videoBitRate.getSelectionModel().clearAndSelect(0);
-                bitrate = Conversions.kpbsToBps(4000);
+                kilobytesPerSecond = 4000;
+                bitrate = Conversions.kpbsToBps(kilobytesPerSecond);
             } else {
                 bitrate = null;
             }
@@ -237,15 +240,16 @@ public class AppController implements Initializable {
 
     //this method is used on the advanced video settings tab
     @FXML
-    void setAdvancedVideoBitRate(ActionEvent event) {
+    void setVideoBitRate(ActionEvent event) {
         try {
             int selectionIndex = videoBitRate.getSelectionModel().getSelectedIndex();
+            int kilobytesPerSecond = videoBitRate.getSelectionModel().getSelectedItem();
             Integer bitRate;
 
             if (selectionIndex == 0) {
                 bitRate = null;
             } else {
-                bitRate = Conversions.kpbsToBps(videoBitRate.getSelectionModel().getSelectedItem());
+                bitRate = Conversions.kpbsToBps(kilobytesPerSecond);
             }
 
             files.get(index).setVideoBitRate(selectionIndex);

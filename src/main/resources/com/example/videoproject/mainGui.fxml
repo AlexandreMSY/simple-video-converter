@@ -161,7 +161,7 @@
                                     <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
                                        <children>
                                           <Label text="Bit Rate:" />
-                                          <ComboBox fx:id="videoBitRate" onAction="#setAdvancedVideoBitRate" />
+                                          <ComboBox fx:id="videoBitRate" onAction="#setVideoBitRate" />
                                        </children>
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
