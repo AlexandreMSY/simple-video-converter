@@ -66,49 +66,68 @@
                               <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                            </rowConstraints>
                            <children>
-                              <GridPane style="-fx-border-color: c8c8c8;" GridPane.columnIndex="1">
-                                <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" />
-                                </columnConstraints>
-                                <rowConstraints>
-                                  <RowConstraints />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                </rowConstraints>
-                                 <children>
-                                    <HBox alignment="CENTER_LEFT" spacing="5.0">
-                                       <children>
-                                          <Label text="File Name:" />
-                                          <TextField fx:id="outputFileName" onKeyTyped="#setOutputName" HBox.hgrow="ALWAYS">
-                                             <HBox.margin>
-                                                <Insets />
-                                             </HBox.margin>
-                                          </TextField>
-                                       </children>
-                                       <opaqueInsets>
-                                          <Insets />
-                                       </opaqueInsets>
-                                       <GridPane.margin>
-                                          <Insets />
-                                       </GridPane.margin>
-                                       <padding>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </padding>
-                                    </HBox>
-                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.rowIndex="1">
-                                       <children>
-                                          <Label text="Video Quality:" />
-                                          <ComboBox fx:id="qualityPresets" onAction="#setVideoQuality" promptText="Default" HBox.hgrow="ALWAYS" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                                       </padding>
-                                    </HBox>
-                                 </children>
+                              <HBox GridPane.columnIndex="1">
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </GridPane.margin>
-                              </GridPane>
+                                 <children>
+                                    <GridPane hgap="1.0" vgap="1.0" HBox.hgrow="ALWAYS">
+                                      <columnConstraints>
+                                        <ColumnConstraints />
+                                          <ColumnConstraints hgrow="ALWAYS" />
+                                      </columnConstraints>
+                                      <rowConstraints>
+                                        <RowConstraints />
+                                        <RowConstraints />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                      </rowConstraints>
+                                       <children>
+                                          <HBox alignment="CENTER_LEFT" spacing="5.0" styleClass="test" stylesheets="@style.css">
+                                             <children>
+                                                <Label text="File Name:" />
+                                             </children>
+                                             <opaqueInsets>
+                                                <Insets />
+                                             </opaqueInsets>
+                                             <GridPane.margin>
+                                                <Insets />
+                                             </GridPane.margin>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" spacing="5.0" styleClass="test" stylesheets="@style.css" GridPane.rowIndex="1">
+                                             <children>
+                                                <Label text="Video Quality:" />
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </HBox>
+                                          <HBox alignment="CENTER" styleClass="test" stylesheets="@style.css" GridPane.columnIndex="1">
+                                             <children>
+                                                <TextField fx:id="outputFileName" onKeyTyped="#setOutputName" HBox.hgrow="ALWAYS">
+                                                   <HBox.margin>
+                                                      <Insets />
+                                                   </HBox.margin>
+                                                </TextField>
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </HBox>
+                                          <HBox alignment="CENTER_LEFT" spacing="5.0" styleClass="test" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                             <children>
+                                                <ComboBox fx:id="qualityPresets" onAction="#setVideoQuality" promptText="Default" />
+                                             </children>
+                                             <padding>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                             </padding>
+                                          </HBox>
+                                       </children>
+                                    </GridPane>
+                                 </children>
+                              </HBox>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                  <children>
                                     <Label text="Output Formats" />
@@ -145,23 +164,49 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </GridPane.margin>
                               </AnchorPane>
-                              <GridPane style="-fx-border-color: red;" GridPane.columnIndex="1">
+                              <GridPane hgap="1.0" vgap="1.0" GridPane.columnIndex="1">
                                 <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                  <ColumnConstraints />
+                                    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                 </columnConstraints>
                                 <rowConstraints>
-                                  <RowConstraints fillHeight="false" minHeight="10.0" prefHeight="30.0" />
-                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints />
+                                  <RowConstraints />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </GridPane.margin>
                                  <children>
-                                    <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1" />
-                                    <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="5.0">
+                                    <HBox alignment="CENTER_LEFT" spacing="5.0" styleClass="test" stylesheets="@style.css" GridPane.rowIndex="1">
+                                       <children>
+                                          <Label text="Frame Rate:" />
+                                       </children>
+                                       <GridPane.margin>
+                                          <Insets />
+                                       </GridPane.margin>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding></HBox>
+                                    <HBox alignment="CENTER_LEFT" spacing="5.0" styleClass="test" stylesheets="@style.css">
                                        <children>
                                           <Label text="Bit Rate:" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </HBox>
+                                    <HBox spacing="5.0" styleClass="tabs" stylesheets="@style.css" GridPane.columnIndex="1">
+                                       <children>
                                           <ComboBox fx:id="videoBitRate" onAction="#setVideoBitRate" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </HBox>
+                                    <HBox spacing="5.0" styleClass="test" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <children>
+                                          <ComboBox fx:id="videoFrameRate" onAction="#setVideoFrameRate" />
                                        </children>
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

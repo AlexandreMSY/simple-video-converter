@@ -131,4 +131,19 @@ public class VideoConversion {
 
         return true;
     }
+
+    public String showInfo(){
+        String info = "File source: " + this.sourcePath + "\n" +
+                "File target: " + this.targetPath + "\n" +
+                "Audio codec: " + this.audioCodec + "\n" +
+                "Audio bit rate: " + this.audioBitRate + "\n" +
+                "Audio channels: " + this.audioChannels + "\n" +
+                "Audio sampling rate: " + this.audioSamplingRate + "\n" +
+                "Video codec: " + this.videoCodec + "\n" +
+                "Video bit rate: " + this.videoBitRate + "\n" +
+                "Video frame rate: " + this.videoFrameRate + "\n" +
+                "Output Format: " + this.outputFormat;
+
+        return info;
+    }
 }

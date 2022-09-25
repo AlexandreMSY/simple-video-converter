@@ -8,7 +8,8 @@ public class FileDetails {
 
     //those attributes are used as indexes for the comboBoxes
     private int qualityPreset;
-    private int videoBitRate;
+    private int videoBitRateOption;
+    private int videoFrameRateOption;
 
     public FileDetails(String fileName, String outputFormat, String fileSize,String status, int qualityPreset) {
         this.fileName = fileName;
@@ -18,12 +19,20 @@ public class FileDetails {
         this.status = status;
     }
 
-    public int getVideoBitRate() {
-        return videoBitRate;
+    public int getVideoBitRateOption() {
+        return videoBitRateOption;
     }
 
-    public void setVideoBitRate(int videoBitRate) {
-        this.videoBitRate = videoBitRate;
+    public void setVideoBitRateOption(int videoBitRateOption) {
+        this.videoBitRateOption = videoBitRateOption;
+    }
+
+    public int getVideoFrameRateOption() {
+        return videoFrameRateOption;
+    }
+
+    public void setVideoFrameRateOption(int videoFrameRateOption) {
+        this.videoFrameRateOption = videoFrameRateOption;
     }
 
     public String getStatus() {

@@ -1,4 +1,4 @@
-package com.example.videoproject;
+package utilitaries;
 
 import java.text.DecimalFormat;
 

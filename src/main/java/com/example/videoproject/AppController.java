@@ -13,8 +13,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
+import utilitaries.Conversions;
 import ws.schild.jave.EncoderException;
-
 
 import java.io.File;
 import java.io.IOException;
@@ -23,6 +23,7 @@ import java.util.ResourceBundle;
 public class AppController implements Initializable {
     private final String usersFolder = System.getProperty("user.home");
     private int index;
+    private Integer bitRate;
     @FXML
     private TableColumn<FileDetails, String> fileName;                //lines 23-27 are all the columns used in the files table
     @FXML
@@ -44,7 +45,9 @@ public class AppController implements Initializable {
     @FXML
     private ComboBox<String> qualityPresets;
     @FXML
-    private ComboBox<Integer> videoBitRate;
+    private ComboBox<String> videoBitRate;
+    @FXML
+    private ComboBox<String> videoFrameRate;
     ObservableList<String> fileFormatsOptions = FXCollections.observableArrayList(
             "mp4",
             "mkv",
@@ -59,21 +62,35 @@ public class AppController implements Initializable {
     ObservableList<String> qualityOptions = FXCollections.observableArrayList("Low", "Default", "High");
     ObservableList<VideoConversion> conversionQueue = FXCollections.observableArrayList();
     ObservableList<FileDetails> files = FXCollections.observableArrayList(); //all the files that are going to be set for conversion
-    ObservableList<Integer> videoBitRateOptions = FXCollections.observableArrayList(
-            0,
-            256,
-            384,
-            512,
-            768,
-            1024,
-            1200,
-            1600,
-            2400,
-            5000,
-            10000,
-            16000);
+    ObservableList<String> videoBitRateOptions = FXCollections.observableArrayList(
+            "Default",
+            "256",
+            "384",
+            "512",
+            "768",
+            "1024",
+            "1200",
+            "1600",
+            "2400",
+            "5000",
+            "10000",
+            "16000");
 
-
+    ObservableList<String> videoFrameRateOptions = FXCollections.observableArrayList(
+            "Default",
+            "5",
+            "12",
+            "15",
+            "18",
+            "20",
+            "23",
+            "24",
+            "25",
+            "29",
+            "30",
+            "50",
+            "60"
+    );
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -86,6 +103,7 @@ public class AppController implements Initializable {
         fileFormats.setItems(fileFormatsOptions);
         qualityPresets.setItems(qualityOptions);
         videoBitRate.setItems(videoBitRateOptions);
+        videoFrameRate.setItems(videoFrameRateOptions);
     }
 
     @FXML
@@ -173,12 +191,13 @@ public class AppController implements Initializable {
             String fileOutputName = conversionQueue.get(index).getOutputName();
             //gets the index of the selected item of the comboBoxes in the tabs and then are used to clear and select the chosen option for the video file
             int qualityPreset = files.get(index).getQualityPreset();
-            int videoBitRateOption = files.get(index).getVideoBitRate();
-
+            int videoBitRateOption = files.get(index).getVideoBitRateOption();
+            int videoFrameRateOption = files.get(index).getVideoFrameRateOption();
 
             outputFileName.setText(fileOutputName);
             qualityPresets.getSelectionModel().clearAndSelect(qualityPreset);
             videoBitRate.getSelectionModel().clearAndSelect(videoBitRateOption);
+            videoFrameRate.getSelectionModel().clearAndSelect(videoFrameRateOption);
 
         } catch (Exception IndexOutOfBoundsException){
             System.out.println("Empty list!");
@@ -188,7 +207,7 @@ public class AppController implements Initializable {
     @FXML
     void changeVideoFormat(@SuppressWarnings("unused") MouseEvent event) {
         try {
-            String selectedFormat = fileFormats.getSelectionModel().getSelectedItem();
+            String selectedFormat = (fileFormats.getSelectionModel().getSelectedItem().equals("mkv") ? "matroska" : fileFormats.getSelectionModel().getSelectedItem());
             conversionQueue.get(index).setOutputFormat(selectedFormat);
 
             /*lines 195-197 refresh the output column to show the chosen outputFormat*/
@@ -217,22 +236,21 @@ public class AppController implements Initializable {
             String selectedQualityPreset = qualityPresets.getSelectionModel().getSelectedItem();
             int qualityPreset = qualityPresets.getSelectionModel().getSelectedIndex();
             int kilobytesPerSecond;
-            Integer bitrate;
 
             if (selectedQualityPreset.equals("Low")) {
                 videoBitRate.getSelectionModel().clearAndSelect(0); //it makes the videoBitRate comboBox in the advanced video tab select 0 in order to return NULL
                 kilobytesPerSecond = 800; 
-                bitrate = Conversions.kpbsToBps(kilobytesPerSecond);
+                bitRate = Conversions.kpbsToBps(kilobytesPerSecond);
             } else if (selectedQualityPreset.equals("High")) {
                 videoBitRate.getSelectionModel().clearAndSelect(0);
                 kilobytesPerSecond = 4000;
-                bitrate = Conversions.kpbsToBps(kilobytesPerSecond);
+                bitRate = Conversions.kpbsToBps(kilobytesPerSecond);
             } else {
-                bitrate = null;
+                bitRate = null;
             }
 
             files.get(index).setQualityPreset(qualityPreset);
-            conversionQueue.get(index).setVideoBitRate(bitrate);
+            conversionQueue.get(index).setVideoBitRate(bitRate);
         } catch (Exception IndexOutOfBoundsException){
             System.out.println("No videos!");
         }
@@ -243,20 +261,34 @@ public class AppController implements Initializable {
     void setVideoBitRate(ActionEvent event) {
         try {
             int selectionIndex = videoBitRate.getSelectionModel().getSelectedIndex();
-            int kilobytesPerSecond = videoBitRate.getSelectionModel().getSelectedItem();
-            Integer bitRate;
+            int kilobytesPerSecond = Integer.parseInt(videoBitRate.getSelectionModel().getSelectedItem());
 
-            if (selectionIndex == 0) {
-                bitRate = null;
-            } else {
+            if (selectionIndex != 0) {
                 bitRate = Conversions.kpbsToBps(kilobytesPerSecond);
+            } else {
+                bitRate = null;
             }
+            files.get(index).setVideoBitRateOption(selectionIndex);
+            conversionQueue.get(index).setVideoBitRate(bitRate);
 
-            files.get(index).setVideoBitRate(selectionIndex);
-            conversionQueue.get(index).setAudioBitRate(bitRate);
         } catch (Exception IndexOutOfBoundsException){
             System.out.println("No videos!");
         }
+    }
+
+    @FXML
+    void setVideoFrameRate(ActionEvent event){
+        int selectedFrameRate = videoFrameRate.getSelectionModel().getSelectedIndex();
+        Integer frameRate;
+
+        if (selectedFrameRate != 0){
+            frameRate = Integer.valueOf(videoFrameRate.getSelectionModel().getSelectedItem());
+        }else{
+            frameRate = null;
+        }
+
+        files.get(index).setVideoFrameRateOption(selectedFrameRate);
+        conversionQueue.get(index).setVideoFrameRate(frameRate);
     }
 
     Service convertVideos = new Service(){
@@ -265,8 +297,9 @@ public class AppController implements Initializable {
                 @Override
                 protected Void call() throws Exception {
                     for (int index = 0; index < conversionQueue.size(); index++) {     //https://docs.oracle.com/javafx/2/api/javafx/concurrent/Service.html for more information on services;
-                        conversionQueue.get(index).encode();                            //https://stackoverflow.com/questions/16037062/javafx-use-a-thread-more-than-once more information about the thread solution
                         files.get(index).setStatus("Converting");
+                        System.out.println(conversionQueue.get(index).showInfo());
+                        conversionQueue.get(index).encode();                            //https://stackoverflow.com/questions/16037062/javafx-use-a-thread-more-than-once more information about the thread solution
                         fileTable.setItems(files);
                         fileTable.refresh();
 
