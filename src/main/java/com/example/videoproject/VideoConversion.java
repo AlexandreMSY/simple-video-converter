@@ -10,6 +10,7 @@ import ws.schild.jave.encode.VideoAttributes;
 import java.io.File;
 
 public class VideoConversion {
+    private Encoder encoder = new Encoder();
     private String outputFormat;
     private String outputName;
     private String sourcePath;
@@ -126,10 +127,15 @@ public class VideoConversion {
         attributes.setVideoAttributes(video);
         attributes.setAudioAttributes(audio);
 
-        Encoder encoder = new Encoder();
-        encoder.encode(new MultimediaObject(source), target, attributes);
+        this.encoder.encode(new MultimediaObject(source), target, attributes);
 
         return true;
+    }
+
+    public String[] getVideoEncoders() throws EncoderException {
+        String[] videoEncoders = this.encoder.getVideoEncoders();
+
+        return videoEncoders;
     }
 
     public String showInfo(){
@@ -146,4 +152,5 @@ public class VideoConversion {
 
         return info;
     }
+
 }

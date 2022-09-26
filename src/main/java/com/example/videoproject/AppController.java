@@ -19,6 +19,7 @@ import ws.schild.jave.EncoderException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 public class AppController implements Initializable {
     private final String usersFolder = System.getProperty("user.home");
@@ -42,6 +43,9 @@ public class AppController implements Initializable {
     private Label outputFolder;
     @FXML
     private ListView<String> fileFormats;
+
+    @FXML
+    private ListView<String> videoCodecs;
     @FXML
     private ComboBox<String> qualityPresets;
     @FXML
@@ -60,7 +64,7 @@ public class AppController implements Initializable {
             "gif");
 
     ObservableList<String> qualityOptions = FXCollections.observableArrayList("Low", "Default", "High");
-    ObservableList<VideoConversion> conversionQueue = FXCollections.observableArrayList();
+    ArrayList<VideoConversion> conversionQueue = new ArrayList();
     ObservableList<FileDetails> files = FXCollections.observableArrayList(); //all the files that are going to be set for conversion
     ObservableList<String> videoBitRateOptions = FXCollections.observableArrayList(
             "Default",
@@ -92,6 +96,13 @@ public class AppController implements Initializable {
             "60"
     );
 
+    ObservableList<String> videoCodecsOptions = FXCollections.observableArrayList(
+            "Default",
+            "h264",
+            "mpeg4",
+            "mpeg2video"
+    );
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         fileName.setCellValueFactory(new PropertyValueFactory<>("fileName"));
@@ -104,6 +115,7 @@ public class AppController implements Initializable {
         qualityPresets.setItems(qualityOptions);
         videoBitRate.setItems(videoBitRateOptions);
         videoFrameRate.setItems(videoFrameRateOptions);
+        videoCodecs.setItems(videoCodecsOptions);
     }
 
     @FXML
@@ -187,12 +199,14 @@ public class AppController implements Initializable {
     void getSelectedIndex(@SuppressWarnings("unused") MouseEvent event) {
         try {
             index = fileTable.getSelectionModel().getSelectedIndex();
+            System.out.println(conversionQueue.get(index).getVideoCodec());
 
             String fileOutputName = conversionQueue.get(index).getOutputName();
             //gets the index of the selected item of the comboBoxes in the tabs and then are used to clear and select the chosen option for the video file
             int qualityPreset = files.get(index).getQualityPreset();
             int videoBitRateOption = files.get(index).getVideoBitRateOption();
             int videoFrameRateOption = files.get(index).getVideoFrameRateOption();
+
 
             outputFileName.setText(fileOutputName);
             qualityPresets.getSelectionModel().clearAndSelect(qualityPreset);
@@ -274,6 +288,13 @@ public class AppController implements Initializable {
         } catch (Exception IndexOutOfBoundsException){
             System.out.println("No videos!");
         }
+    }
+
+    @FXML
+    void setVideoCodec(MouseEvent event) throws EncoderException {
+        String codec = videoCodecs.getSelectionModel().getSelectedItem();
+        conversionQueue.get(index).setVideoCodec(codec);
+        System.out.println(conversionQueue.get(index).getVideoCodec());
     }
 
     @FXML

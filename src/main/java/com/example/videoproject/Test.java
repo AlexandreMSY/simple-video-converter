@@ -26,13 +26,19 @@ public class Test {
 
             String sourcePath = source.getAbsolutePath();
             String newFileName = JOptionPane.showInputDialog(null,"Set the file name");
-            String targetPath = target.getAbsolutePath() + "\\" + newFileName + ".flv";
+            String targetPath = target.getAbsolutePath();
 
             System.out.println(sourcePath);
             System.out.println(targetPath);
 
-            VideoConversion test = new VideoConversion(sourcePath, targetPath, "TEST");
-            test.setVideoFrameRate(null);
+            VideoConversion test = new VideoConversion(sourcePath, targetPath, newFileName);
+            test.setOutputFormat("gif");
+            test.encode();
+            /*int liseLength = test.encoder.getVideoEncoders().length;
+
+            for(int index = 0; index <liseLength; index++){
+                System.out.println("Codec: " + test.encoder.getVideoEncoders()[index]);
+            }*/
 
         }
     }
