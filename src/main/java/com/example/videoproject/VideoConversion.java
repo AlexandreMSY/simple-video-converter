@@ -25,6 +25,8 @@ public class VideoConversion {
     Integer videoBitRate;
     private Integer videoFrameRate;
 
+    private String videoTag;
+
     public VideoConversion(String sourcePath, String targetPath, String outputName) {
         this.sourcePath = sourcePath;
         this.targetPath = targetPath;
@@ -45,6 +47,14 @@ public class VideoConversion {
 
     public void setTargetPath(String targetPath) {
         this.targetPath = targetPath;
+    }
+
+    public String getVideoTag() {
+        return videoTag;
+    }
+
+    public void setVideoTag(String videoTag) {
+        this.videoTag = videoTag;
     }
 
     public String getTargetPath() {
@@ -119,6 +129,7 @@ public class VideoConversion {
 
         VideoAttributes video = new VideoAttributes();
         video.setCodec(this.videoCodec);
+        video.setTag(this.videoTag);
         video.setBitRate(this.videoBitRate);
         video.setFrameRate(this.videoFrameRate);
 

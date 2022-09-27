@@ -32,13 +32,11 @@ public class Test {
             System.out.println(targetPath);
 
             VideoConversion test = new VideoConversion(sourcePath, targetPath, newFileName);
-            test.setOutputFormat("gif");
+            test.setOutputFormat("mp4");
+            test.setVideoCodec("mpeg4");
             test.encode();
-            /*int liseLength = test.encoder.getVideoEncoders().length;
+            System.out.println(test.getVideoTag());
 
-            for(int index = 0; index <liseLength; index++){
-                System.out.println("Codec: " + test.encoder.getVideoEncoders()[index]);
-            }*/
 
         }
     }

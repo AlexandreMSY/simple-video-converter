@@ -100,7 +100,8 @@ public class AppController implements Initializable {
             "Default",
             "h264",
             "mpeg4",
-            "mpeg2video"
+            "mpeg2video",
+            "flv"
     );
 
     @Override
