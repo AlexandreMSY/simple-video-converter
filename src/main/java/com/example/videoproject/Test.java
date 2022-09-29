@@ -33,7 +33,7 @@ public class Test {
 
             VideoConversion test = new VideoConversion(sourcePath, targetPath, newFileName);
             test.setOutputFormat("mp4");
-            test.setVideoCodec("mpeg4");
+            test.setVideoCodec("theora");
             test.encode();
             System.out.println(test.getVideoTag());
 

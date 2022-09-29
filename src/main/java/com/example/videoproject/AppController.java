@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+
 public class AppController implements Initializable {
     private final String usersFolder = System.getProperty("user.home");
     private int index;
@@ -96,13 +97,80 @@ public class AppController implements Initializable {
             "60"
     );
 
-    ObservableList<String> videoCodecsOptions = FXCollections.observableArrayList(
-            "Default",
-            "h264",
-            "mpeg4",
+    ObservableList<String> videoCodecsOptions = FXCollections.observableArrayList("Default",
+            "mpeg1video",
             "mpeg2video",
-            "flv"
-    );
+            "mpeg4",
+            "h261",
+            "h263",
+            "h264");
+
+    private void updateCodecList(String outputFormat){
+
+        ObservableList<String> mp4Codecs = FXCollections.observableArrayList(
+                "Default",
+                "mpeg1video",
+                "mpeg2video",
+                "mpeg4",
+                "h261",
+                "h263",
+                "h264"
+        );
+
+        ObservableList<String> oggCodecs = FXCollections.observableArrayList(
+                "Default",
+                "libtheora"
+        );
+
+        ObservableList<String> flvCodecs = FXCollections.observableArrayList(
+                "Default",
+                "h264",
+                "mpeg4",
+                "flv"
+        );
+
+        ObservableList<String> aviCodecs = FXCollections.observableArrayList(
+                "Default",
+                "mpeg4",
+                "h261",
+                "h263",
+                "h264",
+                "wmv2",
+                "flv",
+                "msmpeg4v1",
+                "msmpeg4v2"
+        );
+
+        ObservableList<String> m4vCodecs = FXCollections.observableArrayList(
+                "Default"
+        );
+
+        ObservableList<String> movCodecs = FXCollections.observableArrayList(
+                "Default",
+                "h264",
+                "mpeg1video",
+                "mpeg2video",
+                "mpeg4"
+        );
+
+        ObservableList<String> gifCodecs = FXCollections.observableArrayList(
+                "Default",
+                "gif"
+        );
+
+
+        switch (outputFormat) {
+            case "mp4", "matroska" -> videoCodecsOptions.setAll(mp4Codecs);
+            case "ogg" -> videoCodecsOptions.setAll(oggCodecs);
+            case "flv" -> videoCodecsOptions.setAll(flvCodecs);
+            case "avi", "swf" -> videoCodecsOptions.setAll(aviCodecs);
+            case "m4v" -> videoCodecsOptions.setAll(m4vCodecs);
+            case "mov" -> videoCodecsOptions.setAll(movCodecs);
+            case "gif" -> videoCodecsOptions.setAll(gifCodecs);
+        }
+
+        videoCodecs.setItems(videoCodecsOptions);
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -220,16 +288,18 @@ public class AppController implements Initializable {
     }
 
     @FXML
-    void changeVideoFormat(@SuppressWarnings("unused") MouseEvent event) {
+    void setOutputFormat(@SuppressWarnings("unused") MouseEvent event) {
         try {
             String selectedFormat = (fileFormats.getSelectionModel().getSelectedItem().equals("mkv") ? "matroska" : fileFormats.getSelectionModel().getSelectedItem());
             conversionQueue.get(index).setOutputFormat(selectedFormat);
 
             /*lines 195-197 refresh the output column to show the chosen outputFormat*/
 
+            this.updateCodecList(selectedFormat);
             files.get(index).setOutputFormat(selectedFormat);
             fileTable.setItems(files);
             fileTable.refresh();
+
         } catch (Exception IndexOutOfBoundsException){
             System.out.println("No videos!");
         }
@@ -252,16 +322,18 @@ public class AppController implements Initializable {
             int qualityPreset = qualityPresets.getSelectionModel().getSelectedIndex();
             int kilobytesPerSecond;
 
-            if (selectedQualityPreset.equals("Low")) {
-                videoBitRate.getSelectionModel().clearAndSelect(0); //it makes the videoBitRate comboBox in the advanced video tab select 0 in order to return NULL
-                kilobytesPerSecond = 800; 
-                bitRate = Conversions.kpbsToBps(kilobytesPerSecond);
-            } else if (selectedQualityPreset.equals("High")) {
-                videoBitRate.getSelectionModel().clearAndSelect(0);
-                kilobytesPerSecond = 4000;
-                bitRate = Conversions.kpbsToBps(kilobytesPerSecond);
-            } else {
-                bitRate = null;
+            switch (selectedQualityPreset) {
+                case "Low" -> {
+                    videoBitRate.getSelectionModel().clearAndSelect(0); //it makes the videoBitRate comboBox in the advanced video tab select 0 in order to return NULL
+                    kilobytesPerSecond = 800;
+                    bitRate = Conversions.kpbsToBps(kilobytesPerSecond);
+                }
+                case "High" -> {
+                    videoBitRate.getSelectionModel().clearAndSelect(0);
+                    kilobytesPerSecond = 4000;
+                    bitRate = Conversions.kpbsToBps(kilobytesPerSecond);
+                }
+                default -> bitRate = null;
             }
 
             files.get(index).setQualityPreset(qualityPreset);
@@ -293,9 +365,18 @@ public class AppController implements Initializable {
 
     @FXML
     void setVideoCodec(MouseEvent event) throws EncoderException {
-        String codec = videoCodecs.getSelectionModel().getSelectedItem();
-        conversionQueue.get(index).setVideoCodec(codec);
-        System.out.println(conversionQueue.get(index).getVideoCodec());
+        try {
+            String codec = videoCodecs.getSelectionModel().getSelectedItem();
+
+            if (codec.equals("Default")) {
+                conversionQueue.get(index).setVideoCodec(null);
+            } else {
+                conversionQueue.get(index).setVideoCodec(codec);
+            }
+            System.out.println(conversionQueue.get(index).getVideoCodec());
+        } catch (Exception IndexOutOfBoundsException){
+            System.out.println("No videos!");
+        }
     }
 
     @FXML
