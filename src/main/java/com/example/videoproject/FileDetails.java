@@ -11,12 +11,42 @@ public class FileDetails {
     private int videoBitRateOption;
     private int videoFrameRateOption;
 
+    private int audioBitRateOption;
+
+    private int audioSampleRateOption;
+
+    private int audioChannelOption;
+
     public FileDetails(String fileName, String outputFormat, String fileSize,String status, int qualityPreset) {
         this.fileName = fileName;
         this.outputFormat = outputFormat;
         this.fileSize = fileSize;
         this.qualityPreset = qualityPreset;
         this.status = status;
+    }
+
+    public int getAudioBitRateOption() {
+        return audioBitRateOption;
+    }
+
+    public void setAudioBitRateOption(int audioBitRateOption) {
+        this.audioBitRateOption = audioBitRateOption;
+    }
+
+    public int getAudioSampleRateOption() {
+        return audioSampleRateOption;
+    }
+
+    public void setAudioSampleRateOption(int audioSampleRateOption) {
+        this.audioSampleRateOption = audioSampleRateOption;
+    }
+
+    public int getAudioChannelOption() {
+        return audioChannelOption;
+    }
+
+    public void setAudioChannelOption(int audioChannelOption) {
+        this.audioChannelOption = audioChannelOption;
     }
 
     public int getVideoBitRateOption() {

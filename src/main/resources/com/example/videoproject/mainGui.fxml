@@ -149,15 +149,15 @@
                         <GridPane hgap="1.0" layoutX="240.0" layoutY="113.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                           <columnConstraints>
                             <ColumnConstraints />
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" />
                           </columnConstraints>
                           <rowConstraints>
-                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <AnchorPane prefHeight="200.0" prefWidth="200.0">
                                  <children>
-                                    <ListView fx:id="videoCodecs" layoutY="92.0" onMouseClicked="#setVideoCodec" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="19.0" />
+                                    <ListView fx:id="videoCodecs" layoutY="92.0" onMouseClicked="#setVideoCodec" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="19.0" />
                                     <Label text="Codecs" />
                                  </children>
                                  <GridPane.margin>
@@ -172,7 +172,6 @@
                                 <rowConstraints>
                                   <RowConstraints />
                                   <RowConstraints />
-                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -180,7 +179,7 @@
                                  <children>
                                     <HBox alignment="CENTER_LEFT" spacing="5.0" styleClass="test" stylesheets="@style.css" GridPane.rowIndex="1">
                                        <children>
-                                          <Label text="Frame Rate:" />
+                                          <Label text="Frame Rate (FPS):" />
                                        </children>
                                        <GridPane.margin>
                                           <Insets />
@@ -190,7 +189,7 @@
                                        </padding></HBox>
                                     <HBox alignment="CENTER_LEFT" spacing="5.0" styleClass="test" stylesheets="@style.css">
                                        <children>
-                                          <Label text="Bit Rate:" />
+                                          <Label text="Bit Rate (kb/s):" />
                                        </children>
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -219,6 +218,99 @@
                      </children></AnchorPane>
             </content>
           </Tab>
+            <Tab text="Advanced Audio">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <GridPane hgap="1.0" layoutX="240.0" layoutY="113.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columnConstraints>
+                            <ColumnConstraints />
+                            <ColumnConstraints hgrow="SOMETIMES" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <AnchorPane>
+                                 <children>
+                                    <ListView layoutY="115.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="19.0" />
+                                    <Label text="Codec" />
+                                 </children>
+                                 <GridPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </GridPane.margin>
+                              </AnchorPane>
+                              <GridPane prefHeight="299.0" prefWidth="459.0" GridPane.columnIndex="1">
+                                <columnConstraints>
+                                  <ColumnConstraints />
+                                    <ColumnConstraints hgrow="ALWAYS" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints fillHeight="false" />
+                                  <RowConstraints fillHeight="false" />
+                                  <RowConstraints fillHeight="false" />
+                                    <RowConstraints fillHeight="false" />
+                                </rowConstraints>
+                                 <GridPane.margin>
+                                    <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                 </GridPane.margin>
+                                 <children>
+                                    <HBox spacing="5.0">
+                                       <children>
+                                          <Label text="Bit Rate (kb/s):" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </HBox>
+                                    <HBox spacing="5.0" GridPane.columnIndex="1">
+                                       <children>
+                                          <ComboBox fx:id="audioBitRate" onAction="#setAudioBitRate" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </HBox>
+                                    <HBox spacing="5.0" GridPane.rowIndex="2">
+                                       <children>
+                                          <Label text="Sample Rate (HZ):" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </HBox>
+                                    <HBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <children>
+                                          <ComboBox fx:id="audioSampleRate" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </HBox>
+                                    <HBox spacing="5.0" GridPane.rowIndex="3">
+                                       <children>
+                                          <Label text="Channels:" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </HBox>
+                                    <HBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                       <children>
+                                          <ComboBox fx:id="audioChannels" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                                       </padding>
+                                    </HBox>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </GridPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
         </tabs>
       </TabPane>
       <GridPane alignment="CENTER" layoutX="11.0" layoutY="34.0" prefHeight="42.0" prefWidth="680.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">

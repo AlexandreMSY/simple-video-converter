@@ -39,7 +39,7 @@ public class Conversions {
         }
     }
 
-    public static int kpbsToBps(int kilobitsPerSecond){
+    public static int kbpsToBps(int kilobitsPerSecond){
         return kilobitsPerSecond * 1000;
     }
 }

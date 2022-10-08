@@ -33,9 +33,9 @@ public class Test {
 
             VideoConversion test = new VideoConversion(sourcePath, targetPath, newFileName);
             test.setOutputFormat("mp4");
-            test.setVideoCodec("theora");
+            test.setAudioCodec("ac3");
+            test.setAudioChannels(6);
             test.encode();
-            System.out.println(test.getVideoTag());
 
 
         }
