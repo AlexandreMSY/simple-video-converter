@@ -159,6 +159,7 @@ public class AppController implements Initializable {
         ObservableList<String> aviCodecs = FXCollections.observableArrayList(
                 "Default",
                 "mpeg4",
+                "mpeg4 (DIVX)",
                 "h261",
                 "h263",
                 "h264",
@@ -402,13 +403,24 @@ public class AppController implements Initializable {
     @FXML
     void setVideoCodec(@SuppressWarnings("unused") MouseEvent event) throws EncoderException {
         try {
-            String codec = videoCodecs.getSelectionModel().getSelectedItem();
+            selectedItem = videoCodecs.getSelectionModel().getSelectedItem();
+            String videoTag = "";
+            String codec = "";
 
-            if (codec.equals("Default")) {
-                conversionQueue.get(index).setVideoCodec(null);
-            } else {
-                conversionQueue.get(index).setVideoCodec(codec);
+            switch (selectedItem) {
+                case "Default" -> codec = null;
+                case "mpeg4 (DIVX)" -> {
+                    codec = "mpeg4";
+                    videoTag = "DIVX";
+                }
+                default -> {
+                    codec = selectedItem;
+                    videoTag = null;
+                }
             }
+
+            conversionQueue.get(index).setVideoCodec(codec);
+            conversionQueue.get(index).setVideoTag(videoTag);
 
             System.out.println(conversionQueue.get(index).getVideoCodec());
 
