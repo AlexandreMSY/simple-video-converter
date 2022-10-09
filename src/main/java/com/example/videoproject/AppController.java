@@ -1,5 +1,6 @@
 package com.example.videoproject;
 
+import fileDetails.FileDetails;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
@@ -14,6 +15,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import utilitaries.Conversions;
+import videoConversion.VideoConversion;
 import ws.schild.jave.EncoderException;
 
 import java.io.File;

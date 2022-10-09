@@ -1,4 +1,4 @@
-package com.example.videoproject;
+package fileDetails;
 
 public class FileDetails {
     private String fileName;

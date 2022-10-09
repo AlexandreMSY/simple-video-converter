@@ -11,4 +11,8 @@ module com.example.videoproject {
     exports com.example.videoproject;
     exports utilitaries;
     opens utilitaries to javafx.fxml;
+    exports videoConversion;
+    opens videoConversion to javafx.fxml;
+    exports fileDetails;
+    opens fileDetails to javafx.fxml;
 }

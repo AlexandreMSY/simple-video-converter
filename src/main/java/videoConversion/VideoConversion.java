@@ -1,4 +1,4 @@
-package com.example.videoproject;
+package videoConversion;
 
 import ws.schild.jave.Encoder;
 import ws.schild.jave.EncoderException;
