@@ -117,12 +117,12 @@
                                              </padding>
                                           </HBox>
                                           <HBox alignment="CENTER_LEFT" spacing="5.0" styleClass="test" stylesheets="@style.css" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                                             <children>
-                                                <ComboBox fx:id="qualityPresets" onAction="#setVideoQuality" promptText="Default" />
-                                             </children>
                                              <padding>
                                                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                              </padding>
+                                             <children>
+                                                <ComboBox fx:id="qualityPresets" onAction="#setVideoQuality" />
+                                             </children>
                                           </HBox>
                                        </children>
                                     </GridPane>
@@ -281,7 +281,7 @@
                                     </HBox>
                                     <HBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <children>
-                                          <ComboBox fx:id="audioSampleRate" />
+                                          <ComboBox fx:id="audioSampleRate" onAction="#setAudioSampleRate" />
                                        </children>
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -297,7 +297,7 @@
                                     </HBox>
                                     <HBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                        <children>
-                                          <ComboBox fx:id="audioChannels" />
+                                          <ComboBox fx:id="audioChannels" onAction="#setAudioChannels" />
                                        </children>
                                        <padding>
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />

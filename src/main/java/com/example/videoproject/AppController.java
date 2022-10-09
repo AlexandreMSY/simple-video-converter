@@ -25,7 +25,8 @@ import java.util.ResourceBundle;
 public class AppController implements Initializable {
     private final String usersFolder = System.getProperty("user.home");
     private int index;
-    private Integer bitRate;
+    private int selectedIndex;
+    private Integer bitsPerSecond;
 
     private String selectedItem;
 
@@ -132,7 +133,21 @@ public class AppController implements Initializable {
             "320"
     );
 
-    private void updateCodecList(String outputFormat){
+    ObservableList<String> audioSampleRateOptions = FXCollections.observableArrayList(
+            "Default",
+            "22050",
+            "24000",
+            "44100",
+            "48000"
+    );
+
+    ObservableList<String> audioChannelOptions = FXCollections.observableArrayList(
+            "Default",
+            "1",
+            "2"
+    );
+
+    private void updateVideoCodecList(String outputFormat){
 
         ObservableList<String> mp4Codecs = FXCollections.observableArrayList(
                 "Default",
@@ -216,6 +231,8 @@ public class AppController implements Initializable {
         videoCodecs.setItems(videoCodecsOptions);
 
         audioBitRate.setItems(audioBitRateOptions);
+        audioSampleRate.setItems(audioSampleRateOptions);
+        audioChannels.setItems(audioChannelOptions);
     }
 
     @FXML
@@ -309,7 +326,8 @@ public class AppController implements Initializable {
             int videoFrameRateSelection = files.get(index).getVideoFrameRateOption();
 
             int audioBitRateSelection = files.get(index).getAudioBitRateOption();
-
+            int audioSamplingRateSelection = files.get(index).getAudioSampleRateOption();
+            int audioChannelsSelection = files.get(index).getAudioChannelOption();
 
             outputFileName.setText(fileOutputName);
             qualityPresets.getSelectionModel().clearAndSelect(qualityPreset);
@@ -318,6 +336,8 @@ public class AppController implements Initializable {
             videoFrameRate.getSelectionModel().clearAndSelect(videoFrameRateSelection);
 
             audioBitRate.getSelectionModel().clearAndSelect(audioBitRateSelection);
+            audioSampleRate.getSelectionModel().clearAndSelect(audioSamplingRateSelection);
+            audioChannels.getSelectionModel().clearAndSelect(audioChannelsSelection);
 
         } catch (Exception IndexOutOfBoundsException){
             System.out.println("Empty list!");
@@ -330,7 +350,7 @@ public class AppController implements Initializable {
             String selectedFormat = (fileFormats.getSelectionModel().getSelectedItem().equals("mkv") ? "matroska" : fileFormats.getSelectionModel().getSelectedItem());
             conversionQueue.get(index).setOutputFormat(selectedFormat);
 
-            this.updateCodecList(selectedFormat);
+            this.updateVideoCodecList(selectedFormat);
 
             files.get(index).setOutputFormat(selectedFormat); //refresh the output column to show the chosen outputFormat
             fileTable.setItems(files);
@@ -356,20 +376,19 @@ public class AppController implements Initializable {
         try {
             selectedItem = qualityPresets.getSelectionModel().getSelectedItem();
             int qualityPreset = qualityPresets.getSelectionModel().getSelectedIndex();
-            Integer kilobytesPerSecond;
 
             switch (selectedItem) {
-                case "Low" -> kilobytesPerSecond = 800;
-                case "High" -> kilobytesPerSecond = 4000;
-                default -> kilobytesPerSecond = null;
+                case "Low" -> bitsPerSecond = 800;
+                case "High" -> bitsPerSecond = 4000;
+                default -> bitsPerSecond = null;
             }
 
             videoBitRate.getSelectionModel().clearAndSelect(0); //it makes the videoBitRate comboBox in the advanced video tab select 0 in order to return NULL
 
-            bitRate = Conversions.kbpsToBps(kilobytesPerSecond);
+            bitsPerSecond = Conversions.kbpsToBps(bitsPerSecond);
 
             files.get(index).setQualityPreset(qualityPreset);
-            conversionQueue.get(index).setVideoBitRate(bitRate);
+            conversionQueue.get(index).setVideoBitRate(bitsPerSecond);
 
         } catch (Exception IndexOutOfBoundsException){
             System.out.println("No videos!");
@@ -380,20 +399,17 @@ public class AppController implements Initializable {
     @FXML
     void setVideoBitRate(@SuppressWarnings("unused") ActionEvent event) {
         try {
-            int selectionIndex = videoBitRate.getSelectionModel().getSelectedIndex();
+            selectedIndex = videoBitRate.getSelectionModel().getSelectedIndex();
             selectedItem = videoBitRate.getSelectionModel().getSelectedItem();
-            Integer kilobytesPerSecond;
 
-            if (selectionIndex != 0) {
-                kilobytesPerSecond = Integer.valueOf(selectedItem);
+            if (selectedIndex != 0) {
+                bitsPerSecond = Conversions.kbpsToBps(Integer.parseInt(selectedItem));
             } else {
-                kilobytesPerSecond = null;
+                bitsPerSecond = null;
             }
 
-            bitRate = Conversions.kbpsToBps(kilobytesPerSecond);
-
-            files.get(index).setVideoBitRateOption(selectionIndex);
-            conversionQueue.get(index).setVideoBitRate(bitRate);
+            files.get(index).setVideoBitRateOption(selectedIndex);
+            conversionQueue.get(index).setVideoBitRate(bitsPerSecond);
 
         } catch (Exception IndexOutOfBoundsException){
             System.out.println("No videos!");
@@ -405,7 +421,7 @@ public class AppController implements Initializable {
         try {
             selectedItem = videoCodecs.getSelectionModel().getSelectedItem();
             String videoTag = "";
-            String codec = "";
+            String codec;
 
             switch (selectedItem) {
                 case "Default" -> codec = null;
@@ -432,17 +448,17 @@ public class AppController implements Initializable {
     @FXML
     void setVideoFrameRate(@SuppressWarnings("unused") ActionEvent event){
         try {
-            int selectedFrameRate = videoFrameRate.getSelectionModel().getSelectedIndex();
+            selectedIndex = videoFrameRate.getSelectionModel().getSelectedIndex();
             selectedItem = videoFrameRate.getSelectionModel().getSelectedItem();
             Integer frameRate;
 
-            if (selectedFrameRate != 0) {
+            if (selectedIndex != 0) {
                 frameRate = Integer.valueOf(selectedItem);
             } else {
                 frameRate = null;
             }
 
-            files.get(index).setVideoFrameRateOption(selectedFrameRate);
+            files.get(index).setVideoFrameRateOption(selectedIndex);
             conversionQueue.get(index).setVideoFrameRate(frameRate);
         } catch (Exception IndexOutOfBoundsException){
             System.out.println("No videos!");
@@ -452,19 +468,61 @@ public class AppController implements Initializable {
     @FXML
     void setAudioBitRate(@SuppressWarnings("unused") ActionEvent event) {
         try {
-            int selectedIndex = audioBitRate.getSelectionModel().getSelectedIndex();
+            selectedIndex = audioBitRate.getSelectionModel().getSelectedIndex();
             selectedItem = audioBitRate.getSelectionModel().getSelectedItem();
 
             if (selectedIndex != 0) {
-                bitRate = Conversions.kbpsToBps(Integer.parseInt(selectedItem));
+                bitsPerSecond = Conversions.kbpsToBps(Integer.parseInt(selectedItem));
             } else {
-                bitRate = null;
+                bitsPerSecond = null;
             }
 
             files.get(index).setAudioBitRateOption(selectedIndex);
-            conversionQueue.get(index).setAudioBitRate(bitRate);
+            conversionQueue.get(index).setAudioBitRate(bitsPerSecond);
 
         } catch (Exception IndexOutOfBoundsException){
+            System.out.println("No videos!");
+        }
+    }
+
+    @FXML
+    void setAudioSampleRate(ActionEvent event) {
+        try {
+            selectedIndex = audioSampleRate.getSelectionModel().getSelectedIndex();
+            Integer hertz;
+            selectedItem = audioSampleRate.getSelectionModel().getSelectedItem();
+
+            if (selectedIndex != 0) {
+                hertz = Integer.valueOf(selectedItem);
+            } else {
+                hertz = null;
+            }
+
+            files.get(index).setAudioSampleRateOption(selectedIndex);
+            conversionQueue.get(index).setAudioSamplingRate(hertz);
+
+        }catch (Exception IndexOutOfBoundsException){
+            System.out.println("No videos!");
+        }
+    }
+
+    @FXML
+    void setAudioChannels(ActionEvent event) {
+        try {
+            selectedIndex = audioChannels.getSelectionModel().getSelectedIndex();
+            Integer channels;
+            selectedItem = audioChannels.getSelectionModel().getSelectedItem();
+
+            if (selectedIndex != 0) {
+                channels = Integer.valueOf(selectedItem);
+            } else {
+                channels = null;
+            }
+
+            files.get(index).setAudioChannelOption(selectedIndex);
+            conversionQueue.get(index).setAudioChannels(channels);
+
+        }catch (Exception IndexOutOfBoundsException){
             System.out.println("No videos!");
         }
     }
