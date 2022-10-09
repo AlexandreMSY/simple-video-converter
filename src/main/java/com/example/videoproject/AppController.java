@@ -266,10 +266,13 @@ public class AppController implements Initializable {
             File file = fileChooser.showOpenDialog(null);
 
             float fileSize = file.length();
+
             String videoName = file.getName();
             String videoNameWithoutExtension = Conversions.removeFileExtension(file.getName());
+
             String sourcePath = file.getAbsolutePath();
             String targetPath = outputFolder.getText();
+
             String readableSize = Conversions.byteConversion(fileSize);
             String status = "In queue";
             int qualityPreset = 1; //Default
@@ -377,17 +380,18 @@ public class AppController implements Initializable {
     void setVideoQuality(@SuppressWarnings("unused") ActionEvent event) {
         try {
             selectedItem = qualityPresets.getSelectionModel().getSelectedItem();
+            Integer kilobytesPerSecond;
             int qualityPreset = qualityPresets.getSelectionModel().getSelectedIndex();
 
             switch (selectedItem) {
-                case "Low" -> bitsPerSecond = 800;
-                case "High" -> bitsPerSecond = 4000;
-                default -> bitsPerSecond = null;
+                case "Low" -> kilobytesPerSecond = 800;
+                case "High" -> kilobytesPerSecond = 4000;
+                default -> kilobytesPerSecond = null;
             }
 
             videoBitRate.getSelectionModel().clearAndSelect(0); //it makes the videoBitRate comboBox in the advanced video tab select 0 in order to return NULL
 
-            bitsPerSecond = Conversions.kbpsToBps(bitsPerSecond);
+            bitsPerSecond = Conversions.kbpsToBps(kilobytesPerSecond);
 
             files.get(index).setQualityPreset(qualityPreset);
             conversionQueue.get(index).setVideoBitRate(bitsPerSecond);
@@ -488,7 +492,7 @@ public class AppController implements Initializable {
     }
 
     @FXML
-    void setAudioSampleRate(ActionEvent event) {
+    void setAudioSampleRate(@SuppressWarnings("unused") ActionEvent event) {
         try {
             selectedIndex = audioSampleRate.getSelectionModel().getSelectedIndex();
             Integer hertz;
@@ -509,7 +513,7 @@ public class AppController implements Initializable {
     }
 
     @FXML
-    void setAudioChannels(ActionEvent event) {
+    void setAudioChannels(@SuppressWarnings("unused") ActionEvent event) {
         try {
             selectedIndex = audioChannels.getSelectionModel().getSelectedIndex();
             Integer channels;
