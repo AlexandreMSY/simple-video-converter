@@ -240,22 +240,22 @@
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </GridPane.margin>
                               </AnchorPane>
-                              <GridPane prefHeight="299.0" prefWidth="459.0" GridPane.columnIndex="1">
+                              <GridPane hgap="1.0" prefHeight="299.0" prefWidth="459.0" vgap="1.0" GridPane.columnIndex="1">
                                 <columnConstraints>
                                   <ColumnConstraints />
                                     <ColumnConstraints hgrow="ALWAYS" />
                                 </columnConstraints>
                                 <rowConstraints>
+                                  <RowConstraints />
                                   <RowConstraints fillHeight="false" />
-                                  <RowConstraints fillHeight="false" />
-                                  <RowConstraints fillHeight="false" />
-                                    <RowConstraints fillHeight="false" />
+                                  <RowConstraints />
+                                    <RowConstraints />
                                 </rowConstraints>
                                  <GridPane.margin>
                                     <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                  </GridPane.margin>
                                  <children>
-                                    <HBox spacing="5.0">
+                                    <HBox alignment="CENTER_LEFT" spacing="5.0" styleClass="test">
                                        <children>
                                           <Label text="Bit Rate (kb/s):" />
                                        </children>
@@ -263,7 +263,7 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
                                     </HBox>
-                                    <HBox spacing="5.0" GridPane.columnIndex="1">
+                                    <HBox spacing="5.0" styleClass="test" GridPane.columnIndex="1">
                                        <children>
                                           <ComboBox fx:id="audioBitRate" onAction="#setAudioBitRate" />
                                        </children>
@@ -271,7 +271,7 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
                                     </HBox>
-                                    <HBox spacing="5.0" GridPane.rowIndex="2">
+                                    <HBox alignment="CENTER_LEFT" spacing="5.0" styleClass="test" GridPane.rowIndex="2">
                                        <children>
                                           <Label text="Sample Rate (HZ):" />
                                        </children>
@@ -279,7 +279,7 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
                                     </HBox>
-                                    <HBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                    <HBox spacing="5.0" styleClass="test" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                        <children>
                                           <ComboBox fx:id="audioSampleRate" onAction="#setAudioSampleRate" />
                                        </children>
@@ -287,7 +287,7 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
                                     </HBox>
-                                    <HBox spacing="5.0" GridPane.rowIndex="3">
+                                    <HBox alignment="CENTER_LEFT" spacing="5.0" styleClass="test" GridPane.rowIndex="3">
                                        <children>
                                           <Label text="Channels:" />
                                        </children>
@@ -295,7 +295,7 @@
                                           <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                                        </padding>
                                     </HBox>
-                                    <HBox spacing="5.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                    <HBox spacing="5.0" styleClass="test" GridPane.columnIndex="1" GridPane.rowIndex="3">
                                        <children>
                                           <ComboBox fx:id="audioChannels" onAction="#setAudioChannels" />
                                        </children>
