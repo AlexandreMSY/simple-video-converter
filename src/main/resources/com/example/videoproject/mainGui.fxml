@@ -233,7 +233,7 @@
                            <children>
                               <AnchorPane>
                                  <children>
-                                    <ListView layoutY="115.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="19.0" />
+                                    <ListView fx:id="audioCodecs" layoutY="115.0" onMouseClicked="#setAudioCodec" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="19.0" />
                                     <Label text="Codec" />
                                  </children>
                                  <GridPane.margin>

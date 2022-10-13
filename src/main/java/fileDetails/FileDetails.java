@@ -1,6 +1,6 @@
 package fileDetails;
 
-public class FileDetails {
+public class FileDetails{
     private String fileName;
     private String outputFormat;
     private String fileSize;

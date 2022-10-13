@@ -53,6 +53,9 @@ public class AppController implements Initializable {
 
     @FXML
     private ListView<String> videoCodecs;
+
+    @FXML
+    private ListView<String> audioCodecs;
     @FXML
     private ComboBox<String> qualityPresets;
     @FXML
@@ -69,6 +72,8 @@ public class AppController implements Initializable {
     @FXML
     private ComboBox<String> audioSampleRate;
 
+    ArrayList<VideoConversion> conversionQueue = new ArrayList();
+
     ObservableList<String> fileFormatsOptions = FXCollections.observableArrayList(
             "mp4",
             "mkv",
@@ -77,12 +82,13 @@ public class AppController implements Initializable {
             "avi",
             "m4v",
             "mov",
-            "swf",
+            //"swf",
             "gif");
 
     ObservableList<String> qualityOptions = FXCollections.observableArrayList("Low", "Default", "High");
-    ArrayList<VideoConversion> conversionQueue = new ArrayList();
+
     ObservableList<FileDetails> files = FXCollections.observableArrayList(); //all the files that are going to be set for conversion
+
     ObservableList<String> videoBitRateOptions = FXCollections.observableArrayList(
             "Default",
             "256",
@@ -113,14 +119,9 @@ public class AppController implements Initializable {
             "60"
     );
 
-    ObservableList<String> videoCodecsOptions = FXCollections.observableArrayList(
-            "Default",
-            "mpeg1video",
-            "mpeg2video",
-            "mpeg4",
-            "h261",
-            "h263",
-            "h264");
+    ObservableList<String> videoCodecsOptions = FXCollections.observableArrayList();
+
+    ObservableList<String> audioCodecsOptions = FXCollections.observableArrayList();
 
     ObservableList<String> audioBitRateOptions = FXCollections.observableArrayList(
         "Default",
@@ -149,9 +150,46 @@ public class AppController implements Initializable {
             "2"
     );
 
+    public void updateAudioCodecList(String outputFormat){
+        ObservableList<String> standardAudioCodecs = FXCollections.observableArrayList(
+                "Default",
+                "libmp3lame",
+                "ac3"
+        );
+
+        ObservableList<String> oggAudioCodecs = FXCollections.observableArrayList(
+                "Default",
+                "libvorbis"
+        );
+
+        ObservableList<String> aviAudioCodecs = FXCollections.observableArrayList(
+                "Default",
+                "libmp3lame",
+                "mp2",
+                "ac3",
+                "wmav2",
+                "pcm_alaw"
+        );
+
+        ObservableList<String> noAudioCodecs = FXCollections.observableArrayList(
+                "Default"
+        );
+
+
+        switch (outputFormat) {
+            case "mp4", "matroska", "flv", "mov" -> audioCodecsOptions.setAll(standardAudioCodecs);
+            case "ogg" -> audioCodecsOptions.setAll(oggAudioCodecs);
+            case "avi" -> audioCodecsOptions.setAll(aviAudioCodecs);
+            case "gif", "m4v" -> audioCodecsOptions.setAll(noAudioCodecs);
+        }
+
+        audioCodecs.setItems(audioCodecsOptions);
+
+    }
+
     private void updateVideoCodecList(String outputFormat){
 
-        ObservableList<String> mp4Codecs = FXCollections.observableArrayList(
+        ObservableList<String> mp4MkvCodecs = FXCollections.observableArrayList(
                 "Default",
                 "mpeg1video",
                 "mpeg2video",
@@ -205,7 +243,7 @@ public class AppController implements Initializable {
 
 
         switch (outputFormat) {
-            case "mp4", "matroska" -> videoCodecsOptions.setAll(mp4Codecs);
+            case "mp4", "matroska" -> videoCodecsOptions.setAll(mp4MkvCodecs);
             case "ogg" -> videoCodecsOptions.setAll(oggCodecs);
             case "flv" -> videoCodecsOptions.setAll(flvCodecs);
             case "avi", "swf" -> videoCodecsOptions.setAll(aviCodecs);
@@ -356,6 +394,7 @@ public class AppController implements Initializable {
             conversionQueue.get(index).setOutputFormat(selectedFormat);
 
             this.updateVideoCodecList(selectedFormat);
+            this.updateAudioCodecList(selectedFormat);
 
             files.get(index).setOutputFormat(selectedFormat); //refresh the output column to show the chosen outputFormat
             fileTable.setItems(files);
@@ -447,6 +486,27 @@ public class AppController implements Initializable {
             System.out.println(conversionQueue.get(index).getVideoCodec());
 
         } catch (Exception IndexOutOfBoundsException){
+            System.out.println("No videos!");
+        }
+    }
+
+    @FXML
+    void setAudioCodec(MouseEvent event) {
+        try {
+            selectedItem = audioCodecs.getSelectionModel().getSelectedItem();
+            String codec;
+
+            switch (selectedItem) {
+                case "Default":
+                    codec = null;
+                    break;
+
+                default:
+                    codec = selectedItem;
+            }
+
+            conversionQueue.get(index).setAudioCodec(codec);
+        }catch (Exception IndexOutOfBoundsException){
             System.out.println("No videos!");
         }
     }
