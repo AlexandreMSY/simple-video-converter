@@ -194,8 +194,6 @@ public class AppController implements Initializable {
                 "mpeg1video",
                 "mpeg2video",
                 "mpeg4",
-                "h261",
-                "h263",
                 "h264"
         );
 
