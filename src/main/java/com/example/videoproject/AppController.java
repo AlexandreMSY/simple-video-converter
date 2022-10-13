@@ -213,8 +213,6 @@ public class AppController implements Initializable {
                 "Default",
                 "mpeg4",
                 "mpeg4 (DIVX)",
-                "h261",
-                "h263",
                 "h264",
                 "wmv2",
                 "flv",
