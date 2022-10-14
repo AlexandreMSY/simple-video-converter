@@ -20,11 +20,9 @@
 
 * Convert videos to the most used video formats
     - mp4, mkv, ogg, flv, avi, m4v, mov and gif.
-
 * Advanced video options
     - Change codec, bitrate and frame rate.
     <img src="https://cdn.discordapp.com/attachments/888559345254662177/1030488906161979582/videoAdv.PNG">
-
 * Advanced audio options
     - Change audio codec, bitrate, sample rate and channels.
     <img src="https://cdn.discordapp.com/attachments/888559345254662177/1030489727025020938/audioAdv.PNG">
@@ -53,6 +51,5 @@ A release for this application is coming soon!
 This software uses the following dependencies:
 
 - [Jave2](https://github.com/a-schild/jave2)
-
 - [JavaFX](https://openjfx.io/)
 
