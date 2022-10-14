@@ -6,6 +6,13 @@
 </br>
 
 <p align="center">
+    <a href="#key-features">Key Features</a> •
+    <a href="#how-to-use">How to use</a> •
+    <a href="#download">Download</a> •
+    <a href="#credits">Credits</a> 
+</p>
+
+<p align="center">
     <img src="https://i2.paste.pics/7023d779c3142488da77afc1fd9c33a8.png?trs=9635a46dcf726f490651c44f969655312b17be62c50cc260539f706429d3184f">
 </p>
 
