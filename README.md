@@ -44,7 +44,9 @@ $ cd simple-video-converter
 
 ## Download
 
-A release for this application is coming soon!
+You can download the latest release [here](https://github.com/AlexandreMSY/simple-video-converter/releases).
+
+You will need to have Java JDK installed on your machine, click [here](https://www.oracle.com/java/technologies/downloads/) to download.
 
 ## Credits
 
